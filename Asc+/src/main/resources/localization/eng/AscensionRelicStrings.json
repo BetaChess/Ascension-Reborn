@@ -1,0 +1,25 @@
+{
+    "TestOfThePizza": {
+        "NAME": "Pronto Pepper Pizza",
+        "FLAVOR": "Pizza can't melt LEGO bars...  or can it? ",
+        "DESCRIPTIONS": [
+            "Upon pickup, raise your Max HP by #b",  
+            ", and take #b",
+            " damage"
+        ]
+    },
+    "StarOfAscension1": {
+        "NAME": "Star of Ascension",
+        "FLAVOR": "Where am I keeping this thing? And why?",
+        "DESCRIPTIONS": [
+            "A star given to you by The Spire. It has an ominous feel to it. "
+        ]
+    },
+    "StarOfAscension2": {
+        "NAME": "Star of Ascension",
+        "FLAVOR": "Where am I keeping this thing? And why?",
+        "DESCRIPTIONS": [
+            "A star given to you by The Spire. It has an ominous feel to it. "
+        ]
+    }
+}
