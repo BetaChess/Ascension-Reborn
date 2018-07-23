@@ -8,6 +8,14 @@
             " damage"
         ]
     },
+    "JSpecialRelic": {
+        "NAME": "Pog Champ",
+        "FLAVOR": "( ͡° ͜ʖ ͡°)",
+        "DESCRIPTIONS": [
+            "Very Special Relic ",
+            "We don't need to rest bois! "
+        ]
+    },
     "StarOfAscension1": {
         "NAME": "Star of Ascension",
         "FLAVOR": "Where am I keeping this thing? And why?",

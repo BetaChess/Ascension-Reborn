@@ -1,9 +1,9 @@
 {
     "CELESTIAL": {
     "NAMES":[
-        "Celestial",
+        "celestial",
         "UNUSED_RESERVE"
     ],
-    "DESCRIPTION": "Celestial cards are Ethereal unless your asc+ level exceeds a certain level. "
+    "DESCRIPTION": "Celestial cards are Ethereal unless your ascension+ level exceeds a certain threshold. "
   }
 }

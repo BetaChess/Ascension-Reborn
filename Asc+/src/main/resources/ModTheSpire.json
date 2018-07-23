@@ -3,7 +3,7 @@
   "name": "Ascension Plus Mod",
   "author_list": ["Beta Chess"],
   "description": "Adds additional levels of ascension",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "sts_version": "07-19-2018",
   "mts_version": "2.6.0",
   "dependencies": ["basemod"],
