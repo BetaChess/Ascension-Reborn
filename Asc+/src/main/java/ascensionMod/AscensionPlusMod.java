@@ -68,7 +68,7 @@ EditKeywordsSubscriber//,
     	
     	logger.info("----------------------------------------------------------------------------");
     }
-    
+     
     
     // !!! creating mod badge and settings
     @SuppressWarnings("deprecation")

@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-
+ 
 
 public class StarOfAscension extends CustomRelic {
 	public static final Logger logger = LogManager.getLogger(StarOfAscension.class.getName());

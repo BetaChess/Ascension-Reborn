@@ -3,7 +3,7 @@ package ascensionMod.relics;
 import basemod.abstracts.CustomRelic;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
-
+ 
 
 public class TestOfThePizza extends CustomRelic {
 	public static final String ID = "TestOfThePizza";

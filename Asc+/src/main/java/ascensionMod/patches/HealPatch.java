@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.core.AbstractCreature;
 
 
 public class HealPatch 
-{
+{ 
 	public static int AL;
 	private static float lessHealPct = 0.25f;
 	

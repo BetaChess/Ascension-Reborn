@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.cards.CardGroup;
 public class getPurgeablePatch 
 {
 	public static int AL;
-	
+	 
 	@SpirePatch(
 		cls = "com.megacrit.cardcrawl.cards.CardGroup",
 		method = "getPurgeableCards"
