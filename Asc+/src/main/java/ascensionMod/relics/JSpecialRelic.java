@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
- 
+  
 
 public class JSpecialRelic extends CustomRelic {
 	public static final String ID = "JSpecialRelic";

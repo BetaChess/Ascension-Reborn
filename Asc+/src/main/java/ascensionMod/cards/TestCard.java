@@ -11,7 +11,7 @@ import com.megacrit.cardcrawl.localization.CardStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
 import ascensionMod.cards.AbstractAscensionCard;
-
+ 
 public class TestCard extends AbstractAscensionCard
 {
 	public static final String ID = "Test Card";

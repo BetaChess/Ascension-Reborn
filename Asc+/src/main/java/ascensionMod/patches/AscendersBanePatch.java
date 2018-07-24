@@ -17,7 +17,7 @@ import basemod.ReflectionHacks;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
- 
+  
 
 @SpirePatch(cls="com.megacrit.cardcrawl.cards.curses.AscendersBane", method="<ctor>")
 public class AscendersBanePatch {

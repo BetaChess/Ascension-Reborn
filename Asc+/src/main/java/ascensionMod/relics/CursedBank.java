@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
- 
+  
 
 public class CursedBank extends CustomRelic {
 	public static final String ID = "CursedBank";
