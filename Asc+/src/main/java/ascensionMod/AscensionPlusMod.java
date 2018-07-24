@@ -42,7 +42,9 @@ EditKeywordsSubscriber//,
     private static final String AUTHOR = "Beta Chess";
     private static final String DESCRIPTION = "Adds additional levels of ascension";
     
-    private static int AscLvl;
+    private static int AscLvl = 5;
+    
+    
     
     public static int getAscLvl() {
     	int retVal = AscLvl;
@@ -63,6 +65,7 @@ EditKeywordsSubscriber//,
     	@SuppressWarnings("unused")
 		AscensionPlusMod AscMod = new AscensionPlusMod();
     	
+    	
     	logger.info("----------------------------------------------------------------------------");
     }
     
@@ -71,6 +74,11 @@ EditKeywordsSubscriber//,
     @SuppressWarnings("deprecation")
 	@Override
     public void receivePostInitialize() {
+    	ascensionMod.patches.AscendersBanePatch.AL = AscLvl;
+    	ascensionMod.patches.getPurgeablePatch.AL = AscLvl;
+    	ascensionMod.relics.StarOfAscension.AL = AscLvl;
+    	ascensionMod.relics. MegaStarOfAscension.AL = AscLvl;
+    	ascensionMod.patches.HealPatch.AL = AscLvl;
     	
     	// Mod badge
     	logger.info("Creating mod badge");
@@ -81,6 +89,10 @@ EditKeywordsSubscriber//,
         	float ascFloat = me.value;
         	AscLvl = Math.round(ascFloat*15);
         	ascensionMod.patches.AscendersBanePatch.AL = AscLvl;
+        	ascensionMod.patches.getPurgeablePatch.AL = AscLvl;
+        	ascensionMod.relics.StarOfAscension.AL = AscLvl;
+        	ascensionMod.relics.MegaStarOfAscension.AL = AscLvl;
+        	ascensionMod.patches.HealPatch.AL = AscLvl;
         	//logger.info(ascFloat); 
         	logger.info(Math.round(ascFloat*15));
         });
@@ -108,11 +120,12 @@ EditKeywordsSubscriber//,
     public void receiveEditRelics() {
     	logger.info("Editing relics");
     	
-    	BaseMod.addRelic(new StarOfAscension1(), RelicType.SHARED);
-    	BaseMod.addRelic(new StarOfAscension2(), RelicType.SHARED);
+    	BaseMod.addRelic(new StarOfAscension(), RelicType.SHARED);
     	BaseMod.addRelic(new TestOfThePizza(), RelicType.SHARED);
     	//if(AbstractDungeon.player.name.equals("Jrmiah")) {
     	BaseMod.addRelic(new JSpecialRelic(), RelicType.SHARED);
+    	BaseMod.addRelic(new CursedBank(), RelicType.SHARED);
+    	BaseMod.addRelic(new MegaStarOfAscension(), RelicType.SHARED);
     	//}
 
     	
@@ -137,7 +150,7 @@ EditKeywordsSubscriber//,
         
         logger.info("Done Creating Keywords");
     }
-    
+
     
     // !!! loading strings for cards and relics
     @Override
@@ -163,9 +176,20 @@ EditKeywordsSubscriber//,
     	//ArrayList<String> cardsToAdd = new ArrayList<>();
     	logger.info("------------------------------------- Asc+ lvl " +  AscLvl + " -------------------------------------");
     	if(AscLvl > 0) {
-    		relicsToAdd.add("StarOfAscension" + AscLvl);
+    		if(AscLvl < 5) {
+    			relicsToAdd.add("StarOfAscension");
+    		}
+    		
     		if(AbstractDungeon.player.name.equals("Jrmiah")) {
     			relicsToAdd.add("JSpecialRelic");
+    		}
+    		
+    		if(AscLvl >= 3) {
+    			relicsToAdd.add("CursedBank");
+    		}
+    		
+    		if(AscLvl >= 5) {
+    			relicsToAdd.add("MegaStarOfAscension");
     		}
     	}
     	

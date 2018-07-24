@@ -42,7 +42,7 @@ public class JSpecialRelic extends CustomRelic {
     	CurrentRestCount = CardCrawlGame.metricData.campfire_rested;
     	//logger.info("------------- " + this.firstTurn + " " + this.counter + " " + CurrentRestCount + " " + prevRestCount + " -------------");
     	if (this.firstTurn) {
-    		if ((this.counter == -2) && (CurrentRestCount == prevRestCount)) {
+    		if ((this.counter == -2) && (CurrentRestCount == prevRestCount) && (com.megacrit.cardcrawl.dungeons.AbstractDungeon.player.currentHealth < 40)) {
     			//logger.info("----------------------------------------------------------------------------");
     			this.counter = -1;
     			flash();

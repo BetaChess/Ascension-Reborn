@@ -10,24 +10,31 @@
     },
     "JSpecialRelic": {
         "NAME": "Pog Champ",
-        "FLAVOR": "( ͡° ͜ʖ ͡°)",
+        "FLAVOR": "Á very special relic for a very special person. Kappa",
         "DESCRIPTIONS": [
             "Very Special Relic ",
             "We don't need to rest bois! "
         ]
     },
-    "StarOfAscension1": {
+    "CursedBank": {
+        "NAME": "Hungry Bank",
+        "FLAVOR": "Is this thing getting lighter? ",
+        "DESCRIPTIONS": [
+            "Whenever you gain gold lose #b20 % of the gold gained"
+        ]
+    },
+    "StarOfAscension": {
         "NAME": "Star of Ascension",
         "FLAVOR": "Where am I keeping this thing? And why?",
         "DESCRIPTIONS": [
             "A star given to you by The Spire. It has an ominous feel to it. "
         ]
     },
-    "StarOfAscension2": {
+    "MegaStarOfAscension": {
         "NAME": "Star of Ascension",
         "FLAVOR": "Where am I keeping this thing? And why?",
         "DESCRIPTIONS": [
-            "A star given to you by The Spire. It has an ominous feel to it. "
+            "A star given to you by The Spire. It feels like it atracts evil magic. "
         ]
     }
 }
