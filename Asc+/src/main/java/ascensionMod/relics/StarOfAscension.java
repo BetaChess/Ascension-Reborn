@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
  
 
@@ -16,11 +17,9 @@ public class StarOfAscension extends CustomRelic {
     private static final String IMG = "relics/StarOfAscension.png";
     private static final String OutlineIMG = "relics/outline/StarOfAscension.png";
     
-    public static int AL;
-    
 
     public void onEquip() {
-    	if(AL > 0) {
+    	if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel > 15) {
     		com.megacrit.cardcrawl.shop.ShopScreen.purgeCost = 100;
         	com.megacrit.cardcrawl.shop.ShopScreen.actualPurgeCost = 100;
     	}
@@ -28,7 +27,7 @@ public class StarOfAscension extends CustomRelic {
     
     
     public int onPlayerHeal(int healAmount) {
-    	if(AL >= 4) {
+    	if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel >= 19) {
     		flash();
     	}
     	

@@ -10,7 +10,7 @@
     },
     "JSpecialRelic": {
         "NAME": "Pog Champ",
-        "FLAVOR": "Á very special relic for a very special person. Kappa",
+        "FLAVOR": "A very special relic for a very special person. Kappa",
         "DESCRIPTIONS": [
             "Very Special Relic ",
             "We don't need to rest bois! "
@@ -34,7 +34,7 @@
         "NAME": "Star of Ascension",
         "FLAVOR": "Where am I keeping this thing? And why?",
         "DESCRIPTIONS": [
-            "A star given to you by The Spire. It feels like it atracts evil magic. "
+            "A star given to you by The Spire. It feels like it attracts evil magic. "
         ]
     }
 }

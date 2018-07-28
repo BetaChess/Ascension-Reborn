@@ -18,7 +18,7 @@ public class CursedBank extends CustomRelic {
     
     public static final Logger logger = LogManager.getLogger(CursedBank.class.getName());
     
-    private float GoldLossPct = 0.20f;
+    private float GoldLossPct = 0.15f;
     
     private int prevGoldCount = 99;
     private int CurrentGoldCount;

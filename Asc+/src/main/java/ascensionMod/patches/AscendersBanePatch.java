@@ -10,6 +10,7 @@ import com.badlogic.gdx.*;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.cards.curses.AscendersBane;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
 import basemod.BaseMod;
@@ -21,6 +22,9 @@ import org.apache.logging.log4j.Logger;
 
 @SpirePatch(cls="com.megacrit.cardcrawl.cards.curses.AscendersBane", method="<ctor>")
 public class AscendersBanePatch {
+	
+	public static int AL = 0;
+	
 	public static final Logger logger = LogManager.getLogger(AscendersBanePatch.class.getName());
 	
 	
@@ -46,15 +50,15 @@ public class AscendersBanePatch {
     }
 	
 	
-	public static int AL;
-	
 	
 	public static void Postfix(AscendersBane __instance)
 	{	
 		__instance.rawDescription = AscenderStrings.DESCRIPTION;
 		__instance.initializeDescription();
-		logger.info("Ascension+ level " + AL);
-		if(AL >= 2) {
+		
+		System.out.println(AL);
+		
+		if(AL >= 17) {
 			__instance.isEthereal = false;
 		}
 		else {

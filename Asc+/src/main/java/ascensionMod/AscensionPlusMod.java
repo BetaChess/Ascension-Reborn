@@ -10,6 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 //import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.*;
@@ -24,6 +26,7 @@ import java.lang.reflect.*;
 import com.megacrit.cardcrawl.relics.*;
 import java.util.*;
 
+import ascensionMod.patches.AscendersBanePatch;
 import ascensionMod.relics.*;
 
 @SpireInitializer
@@ -41,15 +44,12 @@ EditKeywordsSubscriber//,
 	private static final String MODNAME = "Ascension Plus";
     private static final String AUTHOR = "Beta Chess";
     private static final String DESCRIPTION = "Adds additional levels of ascension";
+
     
-    private static int AscLvl = 5;
+    private static Boolean EasterEgg = true;
     
     
     
-    public static int getAscLvl() {
-    	int retVal = AscLvl;
-    	return retVal;
-    }
     
     
     // !!! creating constructer 
@@ -61,6 +61,7 @@ EditKeywordsSubscriber//,
     // !!! Initialize mod
     public static void initialize() {
     	logger.info("------------------------- AscensionPlus initiation -------------------------");
+    	
     	
     	@SuppressWarnings("unused")
 		AscensionPlusMod AscMod = new AscensionPlusMod();
@@ -74,31 +75,24 @@ EditKeywordsSubscriber//,
     @SuppressWarnings("deprecation")
 	@Override
     public void receivePostInitialize() {
-    	ascensionMod.patches.AscendersBanePatch.AL = AscLvl;
-    	ascensionMod.patches.getPurgeablePatch.AL = AscLvl;
-    	ascensionMod.relics.StarOfAscension.AL = AscLvl;
-    	ascensionMod.relics. MegaStarOfAscension.AL = AscLvl;
-    	ascensionMod.patches.HealPatch.AL = AscLvl;
+    	
     	
     	// Mod badge
     	logger.info("Creating mod badge");
+    	
+    	ModPanel settingsPanel = new ModPanel();
         
     	Texture badgeTexture = new Texture("img/AscensionBadge.png");
-        ModPanel settingsPanel = new ModPanel();
-        settingsPanel.addSlider("Asc+ Lvl", 0.0f, 650.0f, 15.0f, "", (me) -> {
-        	float ascFloat = me.value;
-        	AscLvl = Math.round(ascFloat*15);
-        	ascensionMod.patches.AscendersBanePatch.AL = AscLvl;
-        	ascensionMod.patches.getPurgeablePatch.AL = AscLvl;
-        	ascensionMod.relics.StarOfAscension.AL = AscLvl;
-        	ascensionMod.relics.MegaStarOfAscension.AL = AscLvl;
-        	ascensionMod.patches.HealPatch.AL = AscLvl;
-        	//logger.info(ascFloat); 
-        	logger.info(Math.round(ascFloat*15));
-        });
-        BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
+    	ModLabeledToggleButton EasterEggButton = new ModLabeledToggleButton("Turn on easter egg relics",
+        		350.0f, 600.0f, Settings.CREAM_COLOR, FontHelper.charDescFont,
+        		EasterEgg, settingsPanel, (label) -> {}, (button) -> {
+        			EasterEgg = button.enabled;
+        			BaseMod.maybeSetBoolean("Easter", EasterEgg);
+        		});
+    	settingsPanel.addUIElement(EasterEggButton);
+    	BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
         
-        logger.info("Mod badge created"); 
+    	logger.info("Mod badge created"); 
     }
     
     
@@ -172,23 +166,23 @@ EditKeywordsSubscriber//,
     
     // !!! Giving player proper relics (and possibly cards) for the asc+ lvl chosen
     public void receivePostDungeonInitialize() {
+    	AscendersBanePatch.AL = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
+    	
     	ArrayList<String> relicsToAdd = new ArrayList<>();
     	//ArrayList<String> cardsToAdd = new ArrayList<>();
-    	logger.info("------------------------------------- Asc+ lvl " +  AscLvl + " -------------------------------------");
-    	if(AscLvl > 0) {
-    		if(AscLvl < 5) {
+    	if(AbstractDungeon.player.name.equals("Jrmiah") && (EasterEgg)) {
+			relicsToAdd.add("JSpecialRelic");
+		}
+    	if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel > 15) {
+    		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel < 20) {
     			relicsToAdd.add("StarOfAscension");
     		}
     		
-    		if(AbstractDungeon.player.name.equals("Jrmiah")) {
-    			relicsToAdd.add("JSpecialRelic");
-    		}
-    		
-    		if(AscLvl >= 3) {
+    		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel >= 18) {
     			relicsToAdd.add("CursedBank");
     		}
     		
-    		if(AscLvl >= 5) {
+    		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel >= 20) {
     			relicsToAdd.add("MegaStarOfAscension");
     		}
     	}
@@ -198,9 +192,9 @@ EditKeywordsSubscriber//,
 		int relicIndex = AbstractDungeon.player.relics.size();
 		int relicRemoveIndex = relicsToAdd.size() - 1;
 		while (relicsToAdd.size() > 0) {
-			System.out.println("Attempting to add: " + relicsToAdd.get(relicRemoveIndex));
+			logger.info("Attempting to add: " + relicsToAdd.get(relicRemoveIndex));
 			AbstractRelic relic = RelicLibrary.getRelic(relicsToAdd.remove(relicRemoveIndex));
-			System.out.println("Found relic is: " + relic);
+			logger.info("Found relic is: " + relic);
 			AbstractRelic relicCopy = relic.makeCopy();
 			relicCopy.instantObtain(AbstractDungeon.player, relicIndex, true);
 			relicRemoveIndex--;

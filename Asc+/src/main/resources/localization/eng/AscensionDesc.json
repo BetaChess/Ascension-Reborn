@@ -1,0 +1,27 @@
+{
+    "AscensionModeDescriptions": {
+    "TEXT": [
+        "Elites spawn more often.",
+        "Normal enemies are deadlier.",
+        "Elites are deadlier.",
+        "Bosses are deadlier.",
+        "Heal less after Boss battles.",
+         "Start each run damaged.",
+        "Normal enemies are tougher.",
+        "Elites are tougher.",
+        "Bosses are tougher.",
+        "Start each run cursed.",
+        "Fewer Potion Slots.",
+        "Upgraded cards appear less often.",
+        "Poor bosses.",
+        "Lower Max HP.",
+        "Unfavorable Events.",
+        "Merchant's card removal now costs more.",
+        "Ascender's bane is no longer ethereal.",
+        "You gain 15% less gold.",
+        "Healing is 15% less effective.",
+        "Curses are no longer removable."
+    ]
+  }
+}
+
