@@ -6,7 +6,7 @@ Ascension+ 1 (16): Shop removal service now starts at a cost of 100 instead of 7
 Ascension+ 2 (17): Ascender's bane is no longer ethereal.
 Ascension+ 3 (18): You gain 15% less gold.
 Ascension+ 4 (19): Healing is 15% less effective.
-Ascension+ 5 (20): Curses are no longer removable.
+Ascension+ 5 (20): Opening boss chests now gives you a random curse. 
 Ascension+ 6 (21): NOT YET IMPLEMENTED
 Ascension+ 7 (22): NOT YET IMPLEMENTED
 Ascension+ 8 (23): NOT YET IMPLEMENTED
