@@ -13,7 +13,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 public class StarOfAscension extends CustomRelic {
 	public static final Logger logger = LogManager.getLogger(StarOfAscension.class.getName());
 	
-	public static final String ID = "StarOfAscension";
+	public static final String ID = "AscMod:StarOfAscension";
     private static final String IMG = "relics/StarOfAscension.png";
     private static final String OutlineIMG = "relics/outline/StarOfAscension.png";
     
@@ -35,7 +35,7 @@ public class StarOfAscension extends CustomRelic {
     }
     
     public StarOfAscension() {
-        super(ID, new Texture(IMG), new Texture(OutlineIMG), RelicTier.STARTER, LandingSound.FLAT);
+        super(ID, new Texture(IMG), new Texture(OutlineIMG), RelicTier.SPECIAL, LandingSound.FLAT);
     }
     
     @Override

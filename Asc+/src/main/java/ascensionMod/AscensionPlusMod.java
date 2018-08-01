@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.*;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
-//import com.megacrit.cardcrawl.core.Settings.GameLanguage;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.*;
 import com.megacrit.cardcrawl.localization.*;
@@ -21,6 +20,7 @@ import basemod.*;
 import basemod.helpers.*;
 import basemod.interfaces.*;
 
+import java.io.IOException;
 import java.lang.reflect.*;
 
 import com.megacrit.cardcrawl.relics.*;
@@ -31,13 +31,10 @@ import ascensionMod.relics.*;
 
 @SpireInitializer
 public class AscensionPlusMod implements PostInitializeSubscriber,
-//EditCardsSubscriber,
 EditStringsSubscriber, 
 EditRelicsSubscriber,
 PostDungeonInitializeSubscriber,
-EditKeywordsSubscriber//,
-//PostCreateStartingRelicsSubscriber,
-//PostCreateIroncladStartingRelicsSubscriber,
+EditKeywordsSubscriber
 {
 	public static final Logger logger = LogManager.getLogger(AscensionPlusMod.class.getName());
 	
@@ -45,6 +42,9 @@ EditKeywordsSubscriber//,
     private static final String AUTHOR = "Beta Chess";
     private static final String DESCRIPTION = "Adds additional levels of ascension";
 
+    
+    public static SpireConfig config;
+    
     
     private static Boolean EasterEgg = true;
     
@@ -72,10 +72,19 @@ EditKeywordsSubscriber//,
      
     
     // !!! creating mod badge and settings
-    @SuppressWarnings("deprecation")
-	@Override
+    @Override
     public void receivePostInitialize() {
+    	Properties defaults = new Properties();
+    	defaults.setProperty("MaxAscLvl", "16");
+    	defaults.setProperty("AscLvl", "5");
+    	try {
+			config = new SpireConfig("ascensionMod", "config", defaults);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
+    	AbstractDungeon.ascensionLevel = config.getInt("AscLvl");
     	
     	// Mod badge
     	logger.info("Creating mod badge");
@@ -115,13 +124,10 @@ EditKeywordsSubscriber//,
     	logger.info("Editing relics");
     	
     	BaseMod.addRelic(new StarOfAscension(), RelicType.SHARED);
-    	BaseMod.addRelic(new TestOfThePizza(), RelicType.SHARED);
-    	//if(AbstractDungeon.player.name.equals("Jrmiah")) {
     	BaseMod.addRelic(new JSpecialRelic(), RelicType.SHARED);
     	BaseMod.addRelic(new CursedBank(), RelicType.SHARED);
     	BaseMod.addRelic(new MegaStarOfAscension(), RelicType.SHARED);
-    	//}
-
+    	BaseMod.addRelic(new CursedFlame(), RelicType.SHARED);
     	
     	logger.info("Done editing relics");
     }
@@ -171,19 +177,20 @@ EditKeywordsSubscriber//,
     	ArrayList<String> relicsToAdd = new ArrayList<>();
     	//ArrayList<String> cardsToAdd = new ArrayList<>();
     	if(AbstractDungeon.player.name.equals("Jrmiah") && (EasterEgg)) {
-			relicsToAdd.add("JSpecialRelic");
+			relicsToAdd.add("AscMod:JSpecialRelic");
 		}
     	if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel > 15) {
     		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel < 20) {
-    			relicsToAdd.add("StarOfAscension");
+    			relicsToAdd.add("AscMod:StarOfAscension");
     		}
     		
     		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel >= 18) {
-    			relicsToAdd.add("CursedBank");
+    			relicsToAdd.add("AscMod:CursedBank");
     		}
     		
     		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel >= 20) {
-    			relicsToAdd.add("MegaStarOfAscension");
+    			relicsToAdd.add("AscMod:MegaStarOfAscension");
+    			relicsToAdd.add("AscMod:CursedFlame");
     		}
     	}
     	

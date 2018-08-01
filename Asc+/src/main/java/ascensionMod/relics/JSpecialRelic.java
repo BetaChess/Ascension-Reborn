@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
   
 
 public class JSpecialRelic extends CustomRelic {
-	public static final String ID = "JSpecialRelic";
+	public static final String ID = "AscMod:JSpecialRelic";
     private static final String IMG = "relics/Jrm1ah.png";
     private static final String OutlineIMG = "relics/outline/Jrm1ah.png";
     

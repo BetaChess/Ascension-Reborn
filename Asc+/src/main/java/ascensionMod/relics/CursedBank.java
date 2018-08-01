@@ -12,7 +12,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
   
 
 public class CursedBank extends CustomRelic {
-	public static final String ID = "CursedBank";
+	public static final String ID = "AscMod:CursedBank";
     private static final String IMG = "relics/CursedBank.png";
     private static final String OutlineIMG = "relics/outline/CursedBank.png";
     

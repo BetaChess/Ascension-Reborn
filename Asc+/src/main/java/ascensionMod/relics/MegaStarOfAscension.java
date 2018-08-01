@@ -7,7 +7,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
    
  
 public class MegaStarOfAscension extends CustomRelic {
-	public static final String ID = "MegaStarOfAscension";
+	public static final String ID = "AscMod:MegaStarOfAscension";
     private static final String IMG = "relics/MegaStarOfAscension.png";
     private static final String OutlineIMG = "relics/outline/MegaStarOfAscension.png";
     
@@ -30,7 +30,7 @@ public class MegaStarOfAscension extends CustomRelic {
     }
     
     public MegaStarOfAscension() {
-        super(ID, new Texture(IMG), new Texture(OutlineIMG), RelicTier.STARTER, LandingSound.FLAT);
+        super(ID, new Texture(IMG), new Texture(OutlineIMG), RelicTier.SPECIAL, LandingSound.FLAT);
     }
     
     @Override

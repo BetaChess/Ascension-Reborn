@@ -1,5 +1,6 @@
 package ascensionMod.patches;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
@@ -12,10 +13,12 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.screens.DeathScreen;
 import com.megacrit.cardcrawl.screens.charSelect.CharacterOption;
 import com.megacrit.cardcrawl.screens.custom.CustomModeScreen;
 import com.megacrit.cardcrawl.ui.panels.TopPanel;
@@ -23,9 +26,14 @@ import com.megacrit.cardcrawl.ui.panels.TopPanel;
 import basemod.BaseMod;
 import basemod.ReflectionHacks;
 
+import ascensionMod.AscensionPlusMod;
+
 
 public class AscensionPatches 
 {
+	
+	
+	
 	
 	@SuppressWarnings("unchecked")
 	private static Map<String, UIStrings> UiString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson("localization/eng/AscensionDesc.json"), getTrueType(UIStrings.class));
@@ -65,8 +73,8 @@ public class AscensionPatches
 		
 		public static void Postfix(CharacterOption __instance) {
 			
-			if (20 < CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel) {
-				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = 20;
+			if (16 < CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel) {
+				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"));
 			}
 			if (0 > CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel) {
 				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = 0;
@@ -123,8 +131,8 @@ public class AscensionPatches
 		}*/
 		
 		public static SpireReturn<?> Prefix(CharacterOption __instance, int level) {			
-			if(level > 20) {
-				level = 20;
+			if(level > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"))) {
+				level = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"));
 			}
 			
 			CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = level;
@@ -264,5 +272,26 @@ public class AscensionPatches
 				
 			}
         }
+	}
+	
+	@SpirePatch(
+			cls = "com.megacrit.cardcrawl.screens.DeathScreen",
+			method = "update"
+		)
+	public static class UpdatePatch {
+		public static void Postfix(DeathScreen __instance) {
+			if ((__instance.isVictory) && (AbstractDungeon.isAscensionMode) && (!Settings.isTrial) && (AbstractDungeon.ascensionLevel < 20)) {
+				if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"))) {
+					AscensionPlusMod.config.setString("MaxAscLvl", ("" + (1 + Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl")))));
+					AscensionPlusMod.config.setInt("AscLvl", Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl")));
+					try {
+						AscensionPlusMod.config.save();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 }
