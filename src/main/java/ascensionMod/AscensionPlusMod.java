@@ -35,7 +35,7 @@ EditStringsSubscriber,
 EditRelicsSubscriber,
 PostDungeonInitializeSubscriber,
 EditKeywordsSubscriber
-{
+{ 
 	public static final Logger logger = LogManager.getLogger(AscensionPlusMod.class.getName());
 	
 	private static final String MODNAME = "Ascension Plus";

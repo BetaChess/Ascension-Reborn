@@ -25,7 +25,7 @@ public class CursedBank extends CustomRelic {
     private int prevGoldCount = 99;
     private int CurrentGoldCount;
     
-    
+      
     
     public void onEnterRoom(AbstractRoom room)
     {

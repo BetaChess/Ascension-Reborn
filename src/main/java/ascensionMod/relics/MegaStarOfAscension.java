@@ -11,7 +11,7 @@ public class MegaStarOfAscension extends CustomRelic {
     private static final String IMG = "relics/MegaStarOfAscension.png";
     private static final String OutlineIMG = "relics/outline/MegaStarOfAscension.png";
     private static final int newPurgecost = 100;
-    
+     
 
     public void onEquip() {
     	if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel > 20) {

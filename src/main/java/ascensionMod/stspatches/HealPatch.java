@@ -9,7 +9,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 
 public class HealPatch 
 { 
-	private static float lessHealPct = 0.15f;
+	private static float lessHealPct = 0.20f;
 	
 	/*@SpirePatch(
 		cls = "com.megacrit.cardcrawl.characters.AbstractPlayer",
@@ -21,7 +21,7 @@ public class HealPatch
 				healAmt[0] -= Math.round(healAmt[0]*lessHealPct);
 			}
 		}
-	}*/
+	}*/ 
 	
 	@SpirePatch(
 		cls = "com.megacrit.cardcrawl.core.AbstractCreature",

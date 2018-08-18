@@ -34,7 +34,7 @@ public class AscensionPatches
 {
 	
 	
-	
+	  
 	
 	@SuppressWarnings("unchecked")
 	private static Map<String, UIStrings> UiString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson("localization/eng/AscensionDesc.json"), getTrueType(UIStrings.class));

@@ -16,7 +16,7 @@ public class CursedFlame extends CustomRelic {
     private static final String IMG = "relics/CursedFire.png";
     private static final String OutlineIMG = "relics/outline/CursedFire.png";
     
-	
+	 
 	@Override
     public void onEnterRoom(final AbstractRoom room) {
         if (room instanceof TreasureRoomBoss) {

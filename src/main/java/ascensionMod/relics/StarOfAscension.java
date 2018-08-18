@@ -20,7 +20,7 @@ public class StarOfAscension extends CustomRelic {
     private static final String OutlineIMG = "relics/outline/StarOfAscension.png";
     private static final int newPurgecost = 100;
     
-
+ 
     public void onEquip() {
     	if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel > 20) {
     		com.megacrit.cardcrawl.shop.ShopScreen.purgeCost = newPurgecost;

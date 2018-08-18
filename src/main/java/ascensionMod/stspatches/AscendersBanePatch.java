@@ -29,7 +29,7 @@ public class AscendersBanePatch {
 	public static int AL = 0;
 	
 	public static final Logger logger = LogManager.getLogger(AscendersBanePatch.class.getName());
-	
+	 
 	
 	@SuppressWarnings("unchecked")
 	private static Map<String, CardStrings> ascensionCards = (Map<String, CardStrings>)BaseMod.gson.fromJson(loadJson("localization/eng/AscensionCardStrings.json"), getTrueType(CardStrings.class));

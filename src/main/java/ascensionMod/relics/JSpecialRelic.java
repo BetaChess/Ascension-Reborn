@@ -21,7 +21,7 @@ public class JSpecialRelic extends CustomRelic {
     private boolean firstTurn = true;
     private int prevRestCount;
     private int CurrentRestCount;
-    
+     
     
     public void onEnterRestRoom() {
     	flash();
