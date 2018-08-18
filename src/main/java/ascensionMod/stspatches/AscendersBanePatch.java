@@ -12,6 +12,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.cards.curses.AscendersBane;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
+import ascensionMod.AscensionPlusMod;
 import basemod.BaseMod;
 import basemod.ReflectionHacks;
 
@@ -25,8 +26,6 @@ import org.apache.logging.log4j.Logger;
 	paramtypes = {}
 )
 public class AscendersBanePatch {
-	
-	public static int AL = 0;
 	
 	public static final Logger logger = LogManager.getLogger(AscendersBanePatch.class.getName());
 	 
@@ -59,9 +58,7 @@ public class AscendersBanePatch {
 		__instance.rawDescription = AscenderStrings.DESCRIPTION;
 		__instance.initializeDescription();
 		
-		System.out.println(AL);
-		
-		if(AL >= 24) {
+		if(AscensionPlusMod.AbsoluteAscensionLevel >= 24) {
 			__instance.isEthereal = false;
 		}
 		else {

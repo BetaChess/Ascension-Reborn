@@ -10,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.evacipated.cardcrawl.modthespire.lib.*;
-import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.*;
@@ -26,7 +25,6 @@ import java.lang.reflect.*;
 import com.megacrit.cardcrawl.relics.*;
 import java.util.*;
 
-import ascensionMod.stspatches.AscendersBanePatch;
 import ascensionMod.relics.*;
 
 @SpireInitializer
@@ -41,7 +39,9 @@ EditKeywordsSubscriber
 	private static final String MODNAME = "Ascension Plus";
     private static final String AUTHOR = "Beta Chess";
     private static final String DESCRIPTION = "Adds additional levels of ascension";
-
+    
+    
+    public static int AbsoluteAscensionLevel = 15;
     
     public static SpireConfig config;
     
@@ -180,23 +180,22 @@ EditKeywordsSubscriber
     
     // !!! Giving player proper relics (and possibly cards) for the asc+ lvl chosen
     public void receivePostDungeonInitialize() {
-    	AscendersBanePatch.AL = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
     	
     	ArrayList<String> relicsToAdd = new ArrayList<>();
     	//ArrayList<String> cardsToAdd = new ArrayList<>();
     	if(AbstractDungeon.player.name.equals("Jrmiah") && (EasterEgg)) {
 			relicsToAdd.add("AscMod:JSpecialRelic");
 		}
-    	if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel > 20) {
-    		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel < 25) {
+    	if(AbsoluteAscensionLevel > 20) {
+    		if(AbsoluteAscensionLevel < 25) {
     			relicsToAdd.add("AscMod:StarOfAscension");
     		}
     		
-    		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel >= 22) {
+    		if(AbsoluteAscensionLevel >= 22) {
     			relicsToAdd.add("AscMod:CursedBank");
     		}
     		
-    		if(CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel >= 25) {
+    		if(AbsoluteAscensionLevel >= 25) {
     			relicsToAdd.add("AscMod:MegaStarOfAscension");
     			relicsToAdd.add("AscMod:CursedFlame");
     		}
