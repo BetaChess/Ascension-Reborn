@@ -1,0 +1,13 @@
+{
+  "modid": "ascensionmod",
+  "name": "Ascension Plus Mod",
+  "author_list": ["Beta Chess", "Grillkylling"],
+  "description": "Adds additional levels of ascension",
+  "credits": "ModTheSpire Community",
+  "version": "0.7.1",
+  "sts_version": "08-16-2018",
+  "mts_version": "2.9.1",
+  "dependencies": ["basemod"],
+  "update_json": "https://github.com/will2216/Ascension-plus/releases"
+}
+
