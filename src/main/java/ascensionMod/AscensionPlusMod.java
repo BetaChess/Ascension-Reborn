@@ -1,5 +1,5 @@
 package ascensionMod;
- 
+  
 import java.nio.charset.StandardCharsets;
 
 import org.apache.logging.log4j.LogManager;
