@@ -7,6 +7,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
@@ -18,6 +21,7 @@ import com.megacrit.cardcrawl.characters.*;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.controller.CInputActionSet;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.DeathScreen;
 import com.megacrit.cardcrawl.screens.charSelect.CharacterOption;
@@ -32,7 +36,7 @@ import ascensionMod.AscensionPlusMod;
 
 public class AscensionPatches 
 {
-	
+	public static final Logger logger = LogManager.getLogger(AscensionPatches.class.getName());
 	
 	  
 	
@@ -245,7 +249,7 @@ public class AscensionPatches
 				screenXF.setAccessible(true);
 				float screenX = 0;
 				try {
-					screenX = (float)screenXF.get("CustomModeScreen");
+					screenX = (float)screenXF.get(__instance);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -266,7 +270,7 @@ public class AscensionPatches
 				ascensionModeHbF.setAccessible(true);
 				Hitbox ascensionModeHb = null;
 				try {
-					ascensionModeHb = (Hitbox)ascensionModeHbF.get("CustomModeScreen");
+					ascensionModeHb = (Hitbox)ascensionModeHbF.get(__instance);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -333,10 +337,10 @@ public class AscensionPatches
 	}
 	
 	@SpirePatch(
-			cls = "com.megacrit.cardcrawl.screens.DeathScreen",
-			method = "update",
-			paramtypes = {}
-		)
+		cls = "com.megacrit.cardcrawl.screens.DeathScreen",
+		method = "update",
+		paramtypes = {}
+	)
 	public static class UpdatePatch {
 		public static void Postfix(DeathScreen __instance) {
 			if ((__instance.isVictory) && (AbstractDungeon.isAscensionMode) && (!Settings.isTrial) && (AbstractDungeon.ascensionLevel < 25)) {
@@ -384,6 +388,42 @@ public class AscensionPatches
 						}
 					}
 				}
+			}
+		}
+	}
+	@SpirePatch(
+		cls = "com.megacrit.cardcrawl.screens.custom.CustomModeScreen",
+		method = "updateAscension",
+		paramtypes = {}
+	)
+	public static class UpdateAscPatch {
+		public static void Prefix(CustomModeScreen __instance) {
+			
+			Field ascRightHbF = null;
+			try {
+				ascRightHbF = CustomModeScreen.class.getDeclaredField("ascRightHb");
+			} catch (NoSuchFieldException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ascRightHbF.setAccessible(true);
+			Hitbox ascRightHb = null;
+			try {
+				ascRightHb = (Hitbox)ascRightHbF.get(__instance);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ascRightHb.update();
+			if ((ascRightHb.clicked) || (CInputActionSet.pageRightViewExhaust.isJustPressed())) {
+				//playClickFinishSound();
+				
+				ascRightHb.clicked = false;
+				__instance.ascensionLevel += 1;
+				if (__instance.ascensionLevel > 25) {
+					__instance.ascensionLevel = 25;
+				}
+				__instance.isAscensionMode = true;
 			}
 		}
 	}
