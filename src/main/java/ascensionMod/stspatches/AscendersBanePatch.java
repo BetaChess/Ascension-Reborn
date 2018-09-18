@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 
 @SpirePatch(
 	cls="com.megacrit.cardcrawl.cards.curses.AscendersBane", 
-	method="<ctor>", 
+	method=SpirePatch.CONSTRUCTOR, 
 	paramtypes = {}
 )
 public class AscendersBanePatch {

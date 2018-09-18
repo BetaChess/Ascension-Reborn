@@ -41,12 +41,13 @@ EditKeywordsSubscriber
     private static final String DESCRIPTION = "Adds additional levels of ascension";
     
     
-    public static int AbsoluteAscensionLevel = 15;
+    public static int AbsoluteAscensionLevel = 20;
     
     public static SpireConfig config;
     
     
-    private static Boolean EasterEgg = true;
+    private static Boolean EasterEgg;
+    public static Boolean ascScaling;
     
     
     
@@ -81,6 +82,8 @@ EditKeywordsSubscriber
 
     	
     	Properties defaults = new Properties();
+    	defaults.setProperty("Easter", "true");
+    	defaults.setProperty("Ascension_SCALING", "true");
     	defaults.setProperty("MaxAscLvl_SILENT", "" + Spref.getInteger("ASCENSION_LEVEL", 1));
     	defaults.setProperty("MaxAscLvl_IRONCLAD", "" + Ipref.getInteger("ASCENSION_LEVEL", 1));
     	defaults.setProperty("MaxAscLvl_DEFECT", "" + Dpref.getInteger("ASCENSION_LEVEL", 1));
@@ -92,6 +95,8 @@ EditKeywordsSubscriber
 			e.printStackTrace();
 		}
     	
+    	EasterEgg = Boolean.parseBoolean(config.getString("Easter"));
+    	ascScaling = Boolean.parseBoolean(config.getString("Ascension_SCALING"));
     	
     	// Mod badge
     	logger.info("Creating mod badge");
@@ -99,14 +104,35 @@ EditKeywordsSubscriber
     	ModPanel settingsPanel = new ModPanel();
         
     	Texture badgeTexture = new Texture("img/AscensionBadge.png");
-    	@SuppressWarnings("deprecation")
 		ModLabeledToggleButton EasterEggButton = new ModLabeledToggleButton("Turn on easter egg relics",
         		350.0f, 600.0f, Settings.CREAM_COLOR, FontHelper.charDescFont,
        		EasterEgg, settingsPanel, (label) -> {}, (button) -> {
         			EasterEgg = button.enabled;
-        			BaseMod.maybeSetBoolean("Easter", EasterEgg);
+        			//BaseMod.maybeSetBoolean("Easter", EasterEgg);
+        			config.setString("Easter", ("" + EasterEgg));
+					try {
+						AscensionPlusMod.config.save();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
         		});
     	settingsPanel.addUIElement(EasterEggButton);
+    	
+		ModLabeledToggleButton ascScalingButton = new ModLabeledToggleButton("Turn on normal ascension progression",
+        		350.0f, 400.0f, Settings.CREAM_COLOR, FontHelper.charDescFont,
+       		ascScaling, settingsPanel, (label) -> {}, (button) -> {
+        			ascScaling = button.enabled;
+        			//BaseMod.maybeSetBoolean("ascScale", ascScaling);
+        			config.setString("Ascension_SCALING", ("" + ascScaling));
+					try {
+						AscensionPlusMod.config.save();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		});
+    	settingsPanel.addUIElement(ascScalingButton);
     	BaseMod.registerModBadge(badgeTexture, MODNAME, AUTHOR, DESCRIPTION, settingsPanel);
         
     	logger.info("Mod badge created"); 
