@@ -10,6 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.megacrit.cardcrawl.blights.AbstractBlight;
+import com.megacrit.cardcrawl.blights.Accursed;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.*;
@@ -26,6 +28,9 @@ import com.megacrit.cardcrawl.relics.*;
 import java.util.*;
 
 import ascensionMod.relics.*;
+import ascensionMod.blights.*;
+import ascensionMod.blights.CursedBank;
+import ascensionMod.blights.CursedFlame;
 
 @SpireInitializer
 public class AscensionPlusMod implements PostInitializeSubscriber,
@@ -153,16 +158,14 @@ EditKeywordsSubscriber
     }*/
     
     
+
     // !!! adding relics
     public void receiveEditRelics() {
     	logger.info("Editing relics");
     	
     	BaseMod.addRelic(new StarOfAscension(), RelicType.SHARED);
     	BaseMod.addRelic(new JSpecialRelic(), RelicType.SHARED);
-    	BaseMod.addRelic(new CursedBank(), RelicType.SHARED);
-    	BaseMod.addRelic(new MegaStarOfAscension(), RelicType.SHARED);
-    	BaseMod.addRelic(new CursedFlame(), RelicType.SHARED);
-    	
+    	BaseMod.addRelic(new MegaStarOfAscension(), RelicType.SHARED);    	
     	logger.info("Done editing relics");
     }
     
@@ -208,6 +211,8 @@ EditKeywordsSubscriber
     public void receivePostDungeonInitialize() {
     	
     	ArrayList<String> relicsToAdd = new ArrayList<>();
+    	ArrayList<AbstractBlight> blightsToAdd = new ArrayList<>();
+    	
     	//ArrayList<String> cardsToAdd = new ArrayList<>();
     	if(AbstractDungeon.player.name.equals("Jrmiah") && (EasterEgg)) {
 			relicsToAdd.add("AscMod:JSpecialRelic");
@@ -218,12 +223,12 @@ EditKeywordsSubscriber
     		}
     		
     		if(AbsoluteAscensionLevel >= 22) {
-    			relicsToAdd.add("AscMod:CursedBank");
+    			blightsToAdd.add(new CursedBank());
     		}
     		
     		if(AbsoluteAscensionLevel >= 25) {
     			relicsToAdd.add("AscMod:MegaStarOfAscension");
-    			relicsToAdd.add("AscMod:CursedFlame");
+    			blightsToAdd.add(new CursedFlame());
     		}
     	}
     	
@@ -239,6 +244,12 @@ EditKeywordsSubscriber
 			relicCopy.instantObtain(AbstractDungeon.player, relicIndex, true);
 			relicRemoveIndex--;
 			relicIndex++;
+		}
+		
+		//add blights
+		for(AbstractBlight b : blightsToAdd)
+		{
+			b.instantObtain(AbstractDungeon.player, AbstractDungeon.player.blights.size(), true);
 		}
 	}
 }
