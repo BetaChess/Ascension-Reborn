@@ -31,7 +31,7 @@ import com.megacrit.cardcrawl.ui.panels.TopPanel;
 import basemod.BaseMod;
 import basemod.ReflectionHacks;
 
-import ascensionMod.AscensionPlusMod;
+import ascensionMod.AscensionMod;
 
 
 public class AscensionPatches 
@@ -78,64 +78,64 @@ public class AscensionPatches
 		
 		
 		public static void Postfix(CharacterOption __instance) {
-			if(AscensionPlusMod.ascScaling) {
+			if(AscensionMod.ascScaling) {
 				if(CardCrawlGame.chosenCharacter == AbstractPlayer.PlayerClass.THE_SILENT) {
-					if(AscensionPlusMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_SILENT"))) {
-						AscensionPlusMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_SILENT"));
+					if(AscensionMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_SILENT"))) {
+						AscensionMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_SILENT"));
 					}
 				}
 				else if(CardCrawlGame.chosenCharacter == AbstractPlayer.PlayerClass.IRONCLAD) {
-					if(AscensionPlusMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_IRONCLAD"))) {
-						AscensionPlusMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_IRONCLAD"));
+					if(AscensionMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_IRONCLAD"))) {
+						AscensionMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_IRONCLAD"));
 					}
 				}
 				else if(CardCrawlGame.chosenCharacter == AbstractPlayer.PlayerClass.DEFECT) {
-					if(AscensionPlusMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_DEFECT"))) {
-						AscensionPlusMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_DEFECT"));
+					if(AscensionMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_DEFECT"))) {
+						AscensionMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_DEFECT"));
 					}
 				}
 				else {
-					if(AscensionPlusMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"))) {
-						AscensionPlusMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"));
+					if(AscensionMod.AbsoluteAscensionLevel > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl"))) {
+						AscensionMod.AbsoluteAscensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl"));
 					}
 				}
 				
-	            CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = AscensionPlusMod.AbsoluteAscensionLevel;
-	           	if(AscensionPlusMod.AbsoluteAscensionLevel <= 20) {
-	           		if (21 < AscensionPlusMod.AbsoluteAscensionLevel) {
+	            CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = AscensionMod.AbsoluteAscensionLevel;
+	           	if(AscensionMod.AbsoluteAscensionLevel <= 20) {
+	           		if (21 < AscensionMod.AbsoluteAscensionLevel) {
 	           			if(__instance.c.chosenClass == AbstractPlayer.PlayerClass.THE_SILENT) {
-	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_SILENT"));
-	           				AscensionPlusMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
+	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_SILENT"));
+	           				AscensionMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
 	           			}
 	           			else if(__instance.c.chosenClass == AbstractPlayer.PlayerClass.IRONCLAD) {
-	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_IRONCLAD"));
-	           				AscensionPlusMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
+	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_IRONCLAD"));
+	           				AscensionMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
 	           			}
 	           			else if(__instance.c.chosenClass == AbstractPlayer.PlayerClass.DEFECT) {
-	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_DEFECT"));
-	           				AscensionPlusMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
+	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_DEFECT"));
+	           				AscensionMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
 	           			}
 	           			else {
-	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"));
-	           				AscensionPlusMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
+	           				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl"));
+	           				AscensionMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
 	           			}
 	           		}
 	           	}
 			}
 			
-			CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = AscensionPlusMod.AbsoluteAscensionLevel;
+			CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = AscensionMod.AbsoluteAscensionLevel;
 			
-			if(AscensionPlusMod.AbsoluteAscensionLevel > 25) {
-				AscensionPlusMod.AbsoluteAscensionLevel = 25;
-				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = AscensionPlusMod.AbsoluteAscensionLevel;
+			if(AscensionMod.AbsoluteAscensionLevel > 25) {
+				AscensionMod.AbsoluteAscensionLevel = 25;
+				CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = AscensionMod.AbsoluteAscensionLevel;
 			}
 			
            	if (0 > CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel) {
            		CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = 0;
-           		AscensionPlusMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
+           		AscensionMod.AbsoluteAscensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
            	}
 		
-           	int ascensionLevel = AscensionPlusMod.AbsoluteAscensionLevel;
+           	int ascensionLevel = AscensionMod.AbsoluteAscensionLevel;
 						
            	if ((ascensionLevel > 0) && !(ascensionLevel < 0)) {
            		CardCrawlGame.mainMenuScreen.charSelectScreen.ascLevelInfoString = AscensionLevels[(ascensionLevel - 1)];
@@ -158,7 +158,7 @@ public class AscensionPatches
 			}
 			
 			CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = level;
-			AscensionPlusMod.AbsoluteAscensionLevel = level;
+			AscensionMod.AbsoluteAscensionLevel = level;
 			
 			if(level >= 20) {
 				CardCrawlGame.mainMenuScreen.charSelectScreen.ascLevelInfoString = AscensionLevels[(level - 1)];
@@ -180,25 +180,25 @@ public class AscensionPatches
 	)
 	public static class incrementPatch {
 		public static SpireReturn<?> Prefix(CharacterOption __instance, int level) {	
-			if(AscensionPlusMod.ascScaling) {
+			if(AscensionMod.ascScaling) {
 				if(__instance.c.chosenClass == AbstractPlayer.PlayerClass.THE_SILENT) {
-					if(level > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_SILENT"))) {
-						level = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_SILENT"));
+					if(level > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_SILENT"))) {
+						level = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_SILENT"));
 					}
 				}
 				else if(__instance.c.chosenClass == AbstractPlayer.PlayerClass.IRONCLAD) {
-					if(level > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_IRONCLAD"))) {
-						level = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_IRONCLAD"));
+					if(level > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_IRONCLAD"))) {
+						level = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_IRONCLAD"));
 					}
 				}
 				else if(__instance.c.chosenClass == AbstractPlayer.PlayerClass.DEFECT) {
-					if(level > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_DEFECT"))) {
-						level = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_DEFECT"));
+					if(level > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_DEFECT"))) {
+						level = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_DEFECT"));
 					}
 				}
 				else {
-					if(level > Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"))) {
-						level = Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"));
+					if(level > Integer.parseInt(AscensionMod.config.getString("MaxAscLvl"))) {
+						level = Integer.parseInt(AscensionMod.config.getString("MaxAscLvl"));
 					}
 				}
 			}
@@ -208,7 +208,7 @@ public class AscensionPatches
 			}
 			
 			CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel = level;
-			AscensionPlusMod.AbsoluteAscensionLevel = level;
+			AscensionMod.AbsoluteAscensionLevel = level;
 			
 			if(level >= 20) {
 				
@@ -233,19 +233,19 @@ public class AscensionPatches
 		)
 		public static void Insert(CustomModeScreen __instance, SpriteBatch sb)
 		{
-			AscensionPlusMod.AbsoluteAscensionLevel = __instance.ascensionLevel;
+			AscensionMod.AbsoluteAscensionLevel = __instance.ascensionLevel;
 			__instance.ascensionLevel = 0;
 		}
 		
 		public static void Postfix(CustomModeScreen __instance, SpriteBatch sb) {
-			if(AscensionPlusMod.AbsoluteAscensionLevel > 25) {
-				AscensionPlusMod.AbsoluteAscensionLevel = 25;
+			if(AscensionMod.AbsoluteAscensionLevel > 25) {
+				AscensionMod.AbsoluteAscensionLevel = 25;
 			}
-			if(AscensionPlusMod.AbsoluteAscensionLevel < 0) {
-				AscensionPlusMod.AbsoluteAscensionLevel = 0;
+			if(AscensionMod.AbsoluteAscensionLevel < 0) {
+				AscensionMod.AbsoluteAscensionLevel = 0;
 			}
 			
-			__instance.ascensionLevel = AscensionPlusMod.AbsoluteAscensionLevel;
+			__instance.ascensionLevel = AscensionMod.AbsoluteAscensionLevel;
 
 			
 			if(__instance.ascensionLevel != 0) {
@@ -358,10 +358,10 @@ public class AscensionPatches
 		public static void Postfix(DeathScreen __instance) {
 			if ((__instance.isVictory) && (AbstractDungeon.isAscensionMode) && (!Settings.isTrial) && (AbstractDungeon.ascensionLevel < 25)) {
 				if(AbstractDungeon.player.chosenClass == AbstractPlayer.PlayerClass.THE_SILENT) {
-					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_SILENT"))) {
-						AscensionPlusMod.config.setString("MaxAscLvl_SILENT", ("" + (1 + Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_SILENT")))));
+					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_SILENT"))) {
+						AscensionMod.config.setString("MaxAscLvl_SILENT", ("" + (1 + Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_SILENT")))));
 						try {
-							AscensionPlusMod.config.save();
+							AscensionMod.config.save();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -369,10 +369,10 @@ public class AscensionPatches
 					}
 				}
 				else if(AbstractDungeon.player.chosenClass == AbstractPlayer.PlayerClass.IRONCLAD) {
-					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_IRONCLAD"))) {
-						AscensionPlusMod.config.setString("MaxAscLvl_IRONCLAD", ("" + (1 + Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_IRONCLAD")))));
+					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_IRONCLAD"))) {
+						AscensionMod.config.setString("MaxAscLvl_IRONCLAD", ("" + (1 + Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_IRONCLAD")))));
 						try {
-							AscensionPlusMod.config.save();
+							AscensionMod.config.save();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -380,10 +380,10 @@ public class AscensionPatches
 					}
 				}
 				else if(AbstractDungeon.player.chosenClass == AbstractPlayer.PlayerClass.DEFECT) {
-					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_DEFECT"))) {
-						AscensionPlusMod.config.setString("MaxAscLvl_DEFECT", ("" + (1 + Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl_DEFECT")))));
+					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_DEFECT"))) {
+						AscensionMod.config.setString("MaxAscLvl_DEFECT", ("" + (1 + Integer.parseInt(AscensionMod.config.getString("MaxAscLvl_DEFECT")))));
 						try {
-							AscensionPlusMod.config.save();
+							AscensionMod.config.save();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -391,10 +391,10 @@ public class AscensionPatches
 					}
 				}
 				else {
-					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl"))) {
-						AscensionPlusMod.config.setString("MaxAscLvl", ("" + (1 + Integer.parseInt(AscensionPlusMod.config.getString("MaxAscLvl")))));
+					if(AbstractDungeon.ascensionLevel == Integer.parseInt(AscensionMod.config.getString("MaxAscLvl"))) {
+						AscensionMod.config.setString("MaxAscLvl", ("" + (1 + Integer.parseInt(AscensionMod.config.getString("MaxAscLvl")))));
 						try {
-							AscensionPlusMod.config.save();
+							AscensionMod.config.save();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -441,7 +441,7 @@ public class AscensionPatches
 				
 				__instance.isAscensionMode = true;
 			}
-			AscensionPlusMod.AbsoluteAscensionLevel = __instance.ascensionLevel;
+			AscensionMod.AbsoluteAscensionLevel = __instance.ascensionLevel;
 		}
 	}
 }

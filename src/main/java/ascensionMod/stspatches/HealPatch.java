@@ -5,7 +5,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 //import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
-import ascensionMod.AscensionPlusMod;
+import ascensionMod.AscensionMod;
  
 
 public class HealPatch 
@@ -19,7 +19,7 @@ public class HealPatch
 	)
 	public static class HealthGainCreaturePatch{
 		public static void Prefix(AbstractCreature __instance, @ByRef int[] healAmt) {
-			if(AscensionPlusMod.AbsoluteAscensionLevel >= 23) {
+			if(AscensionMod.AbsoluteAscensionLevel >= 23) {
 				healAmt[0] -= Math.round(healAmt[0]*lessHealPct);
 			}
 		}

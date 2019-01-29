@@ -20,7 +20,7 @@ import com.megacrit.cardcrawl.rewards.chests.BossChest;
 import com.megacrit.cardcrawl.screens.select.BossRelicSelectScreen;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 
-import ascensionMod.AscensionPlusMod;
+import ascensionMod.AscensionMod;
 import ascensionMod.blights.CustomBlight;
 
 public class BlightPatch {

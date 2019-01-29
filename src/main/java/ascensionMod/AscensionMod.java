@@ -33,13 +33,14 @@ import ascensionMod.blights.CursedBank;
 import ascensionMod.blights.CursedFlame;
 
 @SpireInitializer
-public class AscensionPlusMod implements PostInitializeSubscriber,
+public class AscensionMod implements PostInitializeSubscriber,
 EditStringsSubscriber, 
 EditRelicsSubscriber,
 PostDungeonInitializeSubscriber,
 EditKeywordsSubscriber
-{ 
-	public static final Logger logger = LogManager.getLogger(AscensionPlusMod.class.getName());
+{  
+	public static final Logger logger = LogManager.getLogger(AscensionMod.class.getName());
+	
 	
 	private static final String MODNAME = "Ascension Plus";
     private static final String AUTHOR = "Beta Chess";
@@ -59,7 +60,7 @@ EditKeywordsSubscriber
     
     
     // !!! creating constructer 
-	public AscensionPlusMod() {
+	public AscensionMod() {
     	BaseMod.subscribe(this);
     }
     
@@ -70,7 +71,7 @@ EditKeywordsSubscriber
     	
     	
     	@SuppressWarnings("unused")
-		AscensionPlusMod AscMod = new AscensionPlusMod();
+		AscensionMod AscMod = new AscensionMod();
     	
     	
     	logger.info("----------------------------------------------------------------------------");
@@ -116,7 +117,7 @@ EditKeywordsSubscriber
         			//BaseMod.maybeSetBoolean("Easter", EasterEgg);
         			config.setString("Easter", ("" + EasterEgg));
 					try {
-						AscensionPlusMod.config.save();
+						AscensionMod.config.save();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -131,7 +132,7 @@ EditKeywordsSubscriber
         			//BaseMod.maybeSetBoolean("ascScale", ascScaling);
         			config.setString("Ascension_SCALING", ("" + ascScaling));
 					try {
-						AscensionPlusMod.config.save();
+						AscensionMod.config.save();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

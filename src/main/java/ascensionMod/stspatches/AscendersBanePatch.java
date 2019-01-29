@@ -12,7 +12,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.cards.curses.AscendersBane;
 import com.megacrit.cardcrawl.localization.CardStrings;
 
-import ascensionMod.AscensionPlusMod;
+import ascensionMod.AscensionMod;
 import basemod.BaseMod;
 import basemod.ReflectionHacks;
 
@@ -58,7 +58,7 @@ public class AscendersBanePatch {
 		__instance.rawDescription = AscenderStrings.DESCRIPTION;
 		__instance.initializeDescription();
 		
-		if(AscensionPlusMod.AbsoluteAscensionLevel >= 24) {
+		if(AscensionMod.AbsoluteAscensionLevel >= 24) {
 			__instance.isEthereal = false;
 		}
 		else {

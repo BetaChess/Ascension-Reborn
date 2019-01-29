@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.relics.AbstractRelic;
 
-import ascensionMod.AscensionPlusMod;
+import ascensionMod.AscensionMod;
 
  
 
@@ -23,7 +23,7 @@ public class StarOfAscension extends CustomRelic {
     
  
     public void onEquip() {
-    	if(AscensionPlusMod.AbsoluteAscensionLevel > 20) {
+    	if(AscensionMod.AbsoluteAscensionLevel > 20) {
     		com.megacrit.cardcrawl.shop.ShopScreen.purgeCost = newPurgecost;
         	com.megacrit.cardcrawl.shop.ShopScreen.actualPurgeCost = newPurgecost;
     	}
@@ -31,7 +31,7 @@ public class StarOfAscension extends CustomRelic {
     
     
     public int onPlayerHeal(int healAmount) {
-    	if(AscensionPlusMod.AbsoluteAscensionLevel >= 23) {
+    	if(AscensionMod.AbsoluteAscensionLevel >= 23) {
     		flash();
     	}
     	
