@@ -46,6 +46,9 @@ EditKeywordsSubscriber
     private static final String AUTHOR = "Beta Chess";
     private static final String DESCRIPTION = "Adds additional levels of ascension";
     
+    public static final int MAXMODASCENSIONLEVEL = 25;
+    public static final int MINMODASCENSIONLEVEL = -20;
+    
     
     public static int AbsoluteAscensionLevel = 20;
     

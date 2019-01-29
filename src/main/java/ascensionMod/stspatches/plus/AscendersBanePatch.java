@@ -1,4 +1,4 @@
-package ascensionMod.stspatches;
+package ascensionMod.stspatches.plus;
 
 
 import java.lang.reflect.Type;

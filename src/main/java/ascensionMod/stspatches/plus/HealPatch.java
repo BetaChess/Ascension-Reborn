@@ -1,4 +1,4 @@
-package ascensionMod.stspatches;
+package ascensionMod.stspatches.plus;
 
 import com.evacipated.cardcrawl.modthespire.lib.ByRef;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
