@@ -1,0 +1,26 @@
+{
+    "AscensionMinusDescriptions": {
+    "TEXT": [
+        "Normal enemies are less deadly.",
+        "Elites are less deadly.",
+        "Bosses are less deadly.",
+        "Normal enemies are less tough.",
+        "Elites are less tough.",
+        "Bosses are less tough.",
+        "Upgraded cards appear more often.",
+        "Richer bosses.",
+        "Higher Max HP.",
+        "Shops cost less.",
+        "Gain Max HP when you defeat a boss.",
+        "You gain 20% more gold.",
+        "Healing is 40% more effective.",
+        "Normal enemies now have 20% chance to drop a relic.",
+        "Elites now drop 1 more card.",
+        "Bosses now drop 1 more rare relic.",
+        "All combat rewards now contain 1 more potion.",
+        "Start each combat with 1 more max energy.",
+        "Draw 1 more card each turn.",
+        "(Min Level) All starting cards are upgraded; all non-boss chests contain an extra relic."
+    ]
+  }
+}
