@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic.RelicTier;
 import com.megacrit.cardcrawl.rewards.RewardItem;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.rooms.MonsterRoomBoss;
+import com.megacrit.cardcrawl.rooms.MonsterRoomElite;
 
 import ascensionMod.AscensionMod;
 
@@ -47,7 +48,7 @@ public class BattleRewardPatch {
 	public static class ElitesDropCard {
 		@SpireInsertPatch(rloc = 134)
 		public static void Insert(AbstractRoom __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -15)
+			if (AscensionMod.AbsoluteAscensionLevel <= -15 && __instance instanceof MonsterRoomElite)
 				__instance.addCardToRewards();
 		}
 	}
@@ -56,7 +57,7 @@ public class BattleRewardPatch {
 	public static class BossDropRelic {
 		@SpireInsertPatch(rloc = 107)
 		public static void Insert(AbstractRoom __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -16)
+			if (AscensionMod.AbsoluteAscensionLevel <= -16 && __instance instanceof MonsterRoomBoss)
 				__instance.addRelicToRewards(AbstractDungeon.returnRandomRelic(RelicTier.RARE));
 		}
 	}

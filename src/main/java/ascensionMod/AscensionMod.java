@@ -11,26 +11,21 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
-import com.megacrit.cardcrawl.blights.Accursed;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.*;
 import com.megacrit.cardcrawl.helpers.*;
 import com.megacrit.cardcrawl.localization.*;
 
 import basemod.*;
-import basemod.helpers.*;
 import basemod.interfaces.*;
 
 import java.io.IOException;
 import java.lang.reflect.*;
 
-import com.megacrit.cardcrawl.relics.*;
 import java.util.*;
 
-import ascensionMod.relics.*;
 import ascensionMod.blights.*;
-import ascensionMod.blights.CursedBank;
-import ascensionMod.blights.CursedFlame;
 
 @SpireInitializer
 public class AscensionMod implements PostInitializeSubscriber,
@@ -42,9 +37,11 @@ EditKeywordsSubscriber
 	public static final Logger logger = LogManager.getLogger(AscensionMod.class.getName());
 	
 	
-	private static final String MODNAME = "Ascension Plus";
-    private static final String AUTHOR = "Beta Chess";
+	private static final String MODNAME = "Ascension Reborn";
+    private static final String AUTHOR = "Beta Chess and Yhrcyt";
     private static final String DESCRIPTION = "Adds additional levels of ascension";
+    
+    public static ArrayList<String> blightIds = new ArrayList<String>();
     
     public static final int MAXMODASCENSIONLEVEL = 25;
     public static final int MINMODASCENSIONLEVEL = -20;
@@ -55,10 +52,7 @@ EditKeywordsSubscriber
     public static SpireConfig config;
     
     
-    private static Boolean EasterEgg;
     public static Boolean ascScaling;
-    
-    
     
     
     
@@ -100,11 +94,9 @@ EditKeywordsSubscriber
     	try {
 			config = new SpireConfig("ascensionMod", "config", defaults);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
-    	EasterEgg = Boolean.parseBoolean(config.getString("Easter"));
     	ascScaling = Boolean.parseBoolean(config.getString("Ascension_SCALING"));
     	
     	// Mod badge
@@ -113,20 +105,6 @@ EditKeywordsSubscriber
     	ModPanel settingsPanel = new ModPanel();
         
     	Texture badgeTexture = new Texture("img/AscensionBadge.png");
-		ModLabeledToggleButton EasterEggButton = new ModLabeledToggleButton("Turn on easter egg relics",
-        		350.0f, 600.0f, Settings.CREAM_COLOR, FontHelper.charDescFont,
-       		EasterEgg, settingsPanel, (label) -> {}, (button) -> {
-        			EasterEgg = button.enabled;
-        			//BaseMod.maybeSetBoolean("Easter", EasterEgg);
-        			config.setString("Easter", ("" + EasterEgg));
-					try {
-						AscensionMod.config.save();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-        		});
-    	settingsPanel.addUIElement(EasterEggButton);
     	
 		ModLabeledToggleButton ascScalingButton = new ModLabeledToggleButton("Turn on normal ascension progression",
         		350.0f, 400.0f, Settings.CREAM_COLOR, FontHelper.charDescFont,
@@ -137,7 +115,6 @@ EditKeywordsSubscriber
 					try {
 						AscensionMod.config.save();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
         		});
@@ -167,9 +144,6 @@ EditKeywordsSubscriber
     public void receiveEditRelics() {
     	logger.info("Editing relics");
     	
-    	BaseMod.addRelic(new StarOfAscension(), RelicType.SHARED);
-    	BaseMod.addRelic(new JSpecialRelic(), RelicType.SHARED);
-    	BaseMod.addRelic(new MegaStarOfAscension(), RelicType.SHARED);    	
     	logger.info("Done editing relics");
     }
     
@@ -210,20 +184,23 @@ EditKeywordsSubscriber
         return Gdx.files.internal(jsonPath).readString(String.valueOf(StandardCharsets.UTF_8));
     }
     
-    
     // !!! Giving player proper relics (and possibly cards) for the asc+ lvl chosen
     public void receivePostDungeonInitialize() {
+    	AbsoluteAscensionLevel = AbstractDungeon.ascensionLevel;
     	
-    	ArrayList<String> relicsToAdd = new ArrayList<>();
+    	if(AbsoluteAscensionLevel >= 25)
+    	{
+    		AbstractPlayer.customMods.add("Blight Chests");
+    		AbstractDungeon.actNum = 4;
+    	}
+    	
+    	//ArrayList<String> relicsToAdd = new ArrayList<>();
     	ArrayList<AbstractBlight> blightsToAdd = new ArrayList<>();
     	
     	//ArrayList<String> cardsToAdd = new ArrayList<>();
-    	if(AbstractDungeon.player.name.equals("Jrmiah") && (EasterEgg)) {
-			relicsToAdd.add("AscMod:JSpecialRelic");
-		}
     	if(AbsoluteAscensionLevel > 20) {
     		if(AbsoluteAscensionLevel < 25) {
-    			relicsToAdd.add("AscMod:StarOfAscension");
+    			blightsToAdd.add(new StarOfAscension());
     		}
     		
     		if(AbsoluteAscensionLevel >= 22) {
@@ -231,14 +208,14 @@ EditKeywordsSubscriber
     		}
     		
     		if(AbsoluteAscensionLevel >= 25) {
-    			relicsToAdd.add("AscMod:MegaStarOfAscension");
+    			blightsToAdd.add(new MegaStarOfAscension());
     			blightsToAdd.add(new CursedFlame());
     		}
     	}
     	
     	
     	//add relics
-		int relicIndex = AbstractDungeon.player.relics.size();
+		/*int relicIndex = AbstractDungeon.player.relics.size();
 		int relicRemoveIndex = relicsToAdd.size() - 1;
 		while (relicsToAdd.size() > 0) {
 			logger.info("Attempting to add: " + relicsToAdd.get(relicRemoveIndex));
@@ -248,7 +225,7 @@ EditKeywordsSubscriber
 			relicCopy.instantObtain(AbstractDungeon.player, relicIndex, true);
 			relicRemoveIndex--;
 			relicIndex++;
-		}
+		}*/
 		
 		//add blights
 		for(AbstractBlight b : blightsToAdd)
