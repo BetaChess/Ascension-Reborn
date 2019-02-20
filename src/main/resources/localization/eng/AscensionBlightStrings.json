@@ -1,0 +1,26 @@
+{
+    "AscMod:CursedBank": {
+        "NAME": "Cursed Bank",
+        "DESCRIPTIONS": [
+            "This hungry bank eats some of the gold you pick up. "
+        ]
+    },
+    "AscMod:CursedFlame": {
+        "NAME": "Cursed Flame",
+        "DESCRIPTIONS": [
+            "The eternal flame of the spire punishes you when you kill a boss. "
+        ]
+    },
+    "AscMod:MegaStarOfAscension": {
+        "NAME": "Star of Ascension",
+        "DESCRIPTIONS": [
+            "A star given to you by The Spire. It feels like it attracts evil. "
+        ]
+    },
+    "AscMod:StarOfAscension": {
+        "NAME": "Star of Ascension",
+        "DESCRIPTIONS": [
+            "A star given to you by The Spire. It has an ominous feel to it. "
+        ]
+    }
+}
