@@ -17,14 +17,6 @@ public class MegaStarOfAscension extends CustomBlight {
     }
     
     @Override
-    public void updateDescription() {
-        this.description = this.blightstrings.DESCRIPTION[0];
-        this.tips.clear();
-        this.tips.add(new PowerTip(this.name, this.description));
-        this.initializeTips();
-    }
-    
-    @Override
     public void onEquip() {
     	if(AscensionMod.AbsoluteAscensionLevel > 20) {
     		com.megacrit.cardcrawl.shop.ShopScreen.purgeCost = newPurgecost;

@@ -42,6 +42,7 @@ EditKeywordsSubscriber
     private static final String DESCRIPTION = "Adds additional levels of ascension";
     
     public static ArrayList<String> blightIds = new ArrayList<String>();
+
     
     public static final int MAXMODASCENSIONLEVEL = 25;
     public static final int MINMODASCENSIONLEVEL = -20;
@@ -172,8 +173,8 @@ EditKeywordsSubscriber
     	logger.info("Editing strings");
     	
     	//BaseMod.loadCustomStrings(CardStrings.class, loadJson("localization/eng/AscensionCardStrings.json"));
-    	BaseMod.loadCustomStrings(RelicStrings.class, loadJson("localization/eng/AscensionRelicStrings.json"));
-    	BaseMod.loadCustomStrings(BlightStrings.class, loadJson("localization/eng/AscensionBlightStrings.json"));
+    	BaseMod.loadCustomStrings(RelicStrings.class, loadJson(getLocalizationPath() + "AscensionRelicStrings.json"));
+    	BaseMod.loadCustomStrings(BlightStrings.class, loadJson(getLocalizationPath() + "AscensionBlightStrings.json"));
     	
     	logger.info("Done editing strings");
     }
@@ -244,4 +245,19 @@ EditKeywordsSubscriber
 			b.instantObtain(AbstractDungeon.player, AbstractDungeon.player.blights.size(), true);
 		}
 	}
+    
+    public static String getLocalizationPath()
+    {
+    	switch(Settings.language)
+    	{
+    	case ENG:
+    		return "localization/eng/";
+    		
+    	case KOR:
+    		return "localization/kor/";
+    		
+    	default:
+    		return "localization/eng/";	
+    	}
+    }
 }

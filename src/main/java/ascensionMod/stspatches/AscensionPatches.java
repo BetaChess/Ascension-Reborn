@@ -42,9 +42,9 @@ public class AscensionPatches
 	  
 	
 	@SuppressWarnings("unchecked")
-	private static Map<String, UIStrings> UiString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson("localization/eng/AscensionDesc.json"), getTrueType(UIStrings.class));
+	private static Map<String, UIStrings> UiString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson(AscensionMod.getLocalizationPath() + "AscensionDesc.json"), getTrueType(UIStrings.class));
 	@SuppressWarnings("unchecked")
-	private static Map<String, UIStrings> UiMinusString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson("localization/eng/AscensionMinusDesc.json"), getTrueType(UIStrings.class));
+	private static Map<String, UIStrings> UiMinusString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson(AscensionMod.getLocalizationPath() + "AscensionMinusDesc.json"), getTrueType(UIStrings.class));
 	
 	private static UIStrings AscensionLevelStrings = UiString.get("AscensionModeDescriptions");
 	private static UIStrings AscensionMinusLevelStrings = UiMinusString.get("AscensionMinusDescriptions");

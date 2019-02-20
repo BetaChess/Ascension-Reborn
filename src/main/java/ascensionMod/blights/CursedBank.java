@@ -20,15 +20,6 @@ public class CursedBank extends CustomBlight {
         super(ID, new Texture(IMG), new Texture(OUTLINE), true);
     }
     
-    
-    @Override
-    public void updateDescription() {
-        this.description = this.blightstrings.DESCRIPTION[0];
-        this.tips.clear();
-        this.tips.add(new PowerTip(this.name, this.description));
-        this.initializeTips();
-    }
-    
     @Override
     public void onEnterRoom(final AbstractRoom room)
     {
