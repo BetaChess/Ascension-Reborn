@@ -1,0 +1,49 @@
+{
+    // DEPRECATED
+    
+    "AscMod:TestOfThePizza": {
+        "NAME": "특제 피망 피자",
+        "FLAVOR": "피자는 레고를 녹일 수 없습니다... 아닌가? ",
+        "DESCRIPTIONS": [
+            "최대 체력+ #b",  
+            ", 피해를 #b",
+            " 입습니다."
+        ]
+    },
+    "AscMod:JSpecialRelic": {
+        "NAME": "띠 용",
+        "FLAVOR": "특별한 사람을 위한 특별한 유물입니다. ㄴㅇ0ㅇㄱ ",
+        "DESCRIPTIONS": [
+            "아주 특별한 유물입니다. ",
+            "상상도 못 한 정체! "
+        ]
+    },
+    "AscMod:CursedBank": {
+        "NAME": "배고픈 아귀 저금통",
+        "FLAVOR": "가벼워 진 것 같은데? ",
+        "DESCRIPTIONS": [
+            "골드를 획득할 때 마다 획득량의 #b15%를 잃습니다."
+        ]
+    },
+    "AscMod:CursedFlame": {
+        "NAME": "저주받은 불꽃",
+        "FLAVOR": "이 불꽃은 어둠으로 주변을 비추지만, 내 앞길만은 또렷하게 보입니다. ",
+        "DESCRIPTIONS": [
+            "보스 상자를 열 때 무작위 저주에 걸립니다. "
+        ]
+    }, 
+    "AscMod:StarOfAscension": {
+        "NAME": "승천의 별",
+        "FLAVOR": "도대체 어디서 얻은거지? 그런데 난 왜 이걸 갖고있을까?",
+        "DESCRIPTIONS": [
+            "첨탑이 쥐어준 별입니다. 불길한 느낌이 듭니다. "
+        ]
+    },
+    "AscMod:MegaStarOfAscension": {
+        "NAME": "승천의 별",
+        "FLAVOR": "도대체 어디서 얻은거지? 그런데 난 왜 이걸 갖고있을까?",
+        "DESCRIPTIONS": [
+            "첨탑이 쥐어준 별입니다. 악의에 차있는 느낌이 듭니다. "
+        ]
+    }
+}

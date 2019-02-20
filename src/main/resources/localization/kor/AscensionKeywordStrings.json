@@ -1,0 +1,23 @@
+{
+    "CELESTIAL": {
+    "NAMES":[
+        "천상",
+        "UNUSED_RESERVE"
+    ],
+    "DESCRIPTION": "천상 카드는 특정 승천 레벨 이하에서는 휘발성 입니다."
+  },
+    "SOULBOUND": {
+    "NAMES":[
+        "영혼귀속",
+        "UNUSED_RESERVE"
+    ],
+    "DESCRIPTION": "영혼귀속 카드를 제거하면 영혼이 찢겨나가는 결과를 초래합니다. (승천 5 이상에서만 영향을 미칩니다)"
+  },
+    "FLESHBOUND": {
+    "NAMES":[
+        "육신귀속",
+        "UNUSED_RESERVE"
+    ],
+    "DESCRIPTION": "육신귀속 카드를 제거하면 영구적 혹은 일시적으로 피해를 입습니다. (승천 5 이상에서만 영향을 미칩니다)"
+  } 
+}
