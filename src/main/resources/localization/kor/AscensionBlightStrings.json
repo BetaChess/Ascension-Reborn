@@ -1,0 +1,26 @@
+{
+    "AscMod:CursedBank": {
+        "NAME": "배고픈 아귀",
+        "DESCRIPTIONS": [
+            "이 배고픈 아귀는 획득한 골드의 일부를 먹습니다. "
+        ]
+    },
+    "AscMod:CursedFlame": {
+        "NAME": "저주받은 불꽃",
+        "DESCRIPTIONS": [
+            "첨탑의 영원한 불길이 보스를 죽일 때 마다 응징을 가합니다. "
+        ]
+    },
+    "AscMod:MegaStarOfAscension": {
+        "NAME": "승천의 별",
+        "DESCRIPTIONS": [
+            "첨탑이 쥐어준 별입니다. 악의에 차있는 느낌이 듭니다. "
+        ]
+    },
+    "AscMod:StarOfAscension": {
+        "NAME": "승천의 별",
+        "DESCRIPTIONS": [
+            "첨탑이 쥐어준 별입니다. 불길한 느낌이 듭니다. "
+        ]
+    }
+}
