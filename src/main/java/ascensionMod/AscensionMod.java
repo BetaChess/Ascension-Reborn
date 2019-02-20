@@ -33,7 +33,7 @@ EditStringsSubscriber,
 EditRelicsSubscriber,
 PostDungeonInitializeSubscriber,
 EditKeywordsSubscriber
-{  
+{
 	public static final Logger logger = LogManager.getLogger(AscensionMod.class.getName());
 	
 	
@@ -85,7 +85,6 @@ EditKeywordsSubscriber
 
     	
     	Properties defaults = new Properties();
-    	defaults.setProperty("Easter", "true");
     	defaults.setProperty("Ascension_SCALING", "true");
     	defaults.setProperty("MaxAscLvl_SILENT", "" + Spref.getInteger("ASCENSION_LEVEL", 1));
     	defaults.setProperty("MaxAscLvl_IRONCLAD", "" + Ipref.getInteger("ASCENSION_LEVEL", 1));
@@ -174,6 +173,7 @@ EditKeywordsSubscriber
     	
     	//BaseMod.loadCustomStrings(CardStrings.class, loadJson("localization/eng/AscensionCardStrings.json"));
     	BaseMod.loadCustomStrings(RelicStrings.class, loadJson("localization/eng/AscensionRelicStrings.json"));
+    	BaseMod.loadCustomStrings(BlightStrings.class, loadJson("localization/eng/AscensionBlightStrings.json"));
     	
     	logger.info("Done editing strings");
     }
@@ -212,6 +212,17 @@ EditKeywordsSubscriber
     			blightsToAdd.add(new CursedFlame());
     		}
     	}
+    	
+    	// ascension minus levels
+    	if (AscensionMod.AbsoluteAscensionLevel <= -9) {
+			AbstractDungeon.player.increaseMaxHp(AbstractDungeon.player.getAscensionMaxHPLoss(), false);
+		}
+		if (AscensionMod.AbsoluteAscensionLevel <= -18) {
+			AbstractDungeon.player.energy.energyMaster++;
+		}
+		if (AscensionMod.AbsoluteAscensionLevel <= -19) {
+			AbstractDungeon.player.masterHandSize++;
+		}
     	
     	
     	//add relics

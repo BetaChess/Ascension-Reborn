@@ -4,12 +4,20 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.localization.BlightStrings;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public abstract class CustomBlight extends AbstractBlight {
+	BlightStrings blightstrings; 
 	
-    public CustomBlight(final String ID, final String name, final String desc, final Texture imgTexture, final Texture imgOutline, final boolean unique) {
-        super(ID, name, desc, null, unique);
+    public CustomBlight(final String ID, final Texture imgTexture, final Texture imgOutline, final boolean unique) {
+    	super(ID, "", "", null, unique);
+    	
+    	
+    	this.blightstrings = CardCrawlGame.languagePack.getBlightString(ID);
+    	this.name = blightstrings.NAME;
+    	this.description = blightstrings.DESCRIPTION[0];
         
         this.img = imgTexture;
         this.outlineImg = imgOutline;

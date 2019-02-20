@@ -9,23 +9,21 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 
 public class CursedBank extends CustomBlight {
 	public static final String ID = "AscMod:CursedBank";
-	public static final String NAME = "Cursed Bank";
     private static final String IMG = "blights/CursedBank.png";
     private static final String OUTLINE = "blights/outline/CursedBank.png";
-    public static final String[] DESC = new String[] {"This hungry bank eats some of the gold you pick up. "};
     
     private int prevGoldCount = 99;
     private int CurrentGoldCount;
     private float GoldLossPct = 0.20f;
     
     public CursedBank() {
-        super(ID, NAME, DESC[0], new Texture(IMG), new Texture(OUTLINE), true);
+        super(ID, new Texture(IMG), new Texture(OUTLINE), true);
     }
     
     
     @Override
     public void updateDescription() {
-        this.description = DESC[0];
+        this.description = this.blightstrings.DESCRIPTION[0];
         this.tips.clear();
         this.tips.add(new PowerTip(this.name, this.description));
         this.initializeTips();

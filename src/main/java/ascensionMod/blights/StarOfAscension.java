@@ -7,20 +7,19 @@ import ascensionMod.AscensionMod;
 
 public class StarOfAscension extends CustomBlight {
 	public static final String ID = "AscMod:StarOfAscension";
-	public static final String NAME = "Star of Ascension";
     private static final String IMG = "blights/StarOfAscension.png";
     private static final String OUTLINE = "blights/outline/StarOfAscension.png";
-    public static final String[] DESC = new String[] {"A star given to you by The Spire. It has an ominous feel to it. "};
+
     private static final int newPurgecost = 100;
     
     
     public StarOfAscension() {
-        super(ID, NAME, DESC[0], new Texture(IMG), new Texture(OUTLINE), true);   
+        super(ID, new Texture(IMG), new Texture(OUTLINE), true);   
     }
     
     @Override
     public void updateDescription() {
-        this.description = DESC[0];
+        this.description = this.blightstrings.DESCRIPTION[0];
         this.tips.clear();
         this.tips.add(new PowerTip(this.name, this.description));
         this.initializeTips();
