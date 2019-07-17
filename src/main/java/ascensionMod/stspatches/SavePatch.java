@@ -19,8 +19,6 @@ public class SavePatch {
 	{
 		public static void Prefix(final SaveFile save)
 		{
-			
-			
 			if(AscensionMod.AbsoluteAscensionLevel >= 25)
 			{
 				if(!(AbstractPlayer.customMods.contains("Blight Chests")))

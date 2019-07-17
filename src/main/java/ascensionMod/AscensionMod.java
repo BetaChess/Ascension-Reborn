@@ -11,6 +11,8 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.blights.AbstractBlight;
+import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.curses.AscendersBane;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.*;
@@ -32,7 +34,8 @@ public class AscensionMod implements PostInitializeSubscriber,
 EditStringsSubscriber, 
 EditRelicsSubscriber,
 PostDungeonInitializeSubscriber,
-EditKeywordsSubscriber
+EditKeywordsSubscriber,
+EditCardsSubscriber
 {
 	public static final Logger logger = LogManager.getLogger(AscensionMod.class.getName());
 	
@@ -49,6 +52,8 @@ EditKeywordsSubscriber
     
     
     public static int AbsoluteAscensionLevel = 20;
+    
+    public static boolean BlightedRun = false;
     
     public static SpireConfig config;
     
@@ -126,17 +131,17 @@ EditKeywordsSubscriber
     
     
     // !!! adding cards
-    /*@Override
+    @Override
     public void receiveEditCards() {
         logger.info("begin editing cards");
         try {
-        	BaseMod.addCard(new TestCard());
+        	BaseMod.addCard(new ascensionMod.cards.AscendersBane());
         } 
         catch (Exception e) {
             logger.error("Error while adding cards",e);
         }
         logger.info("done editing cards");
-    }*/
+    }
     
     
 
@@ -151,7 +156,7 @@ EditKeywordsSubscriber
     // !!! creating keywords
     @Override
     public void receiveEditKeywords() {
-    	logger.info("Creating Keywords");
+    	/*logger.info("Creating Keywords");
 
         Type typeToken = new TypeToken<Map<String, Keyword>>(){}.getType();
         Gson gson = new Gson();
@@ -163,7 +168,7 @@ EditKeywordsSubscriber
             BaseMod.addKeyword(kw.NAMES, kw.DESCRIPTION);
         }
         
-        logger.info("Done Creating Keywords");
+        logger.info("Done Creating Keywords");*/
     }
 
     
@@ -172,9 +177,13 @@ EditKeywordsSubscriber
     public void receiveEditStrings() {
     	logger.info("Editing strings");
     	
-    	//BaseMod.loadCustomStrings(CardStrings.class, loadJson("localization/eng/AscensionCardStrings.json"));
     	BaseMod.loadCustomStrings(RelicStrings.class, loadJson(getLocalizationPath() + "AscensionRelicStrings.json"));
+    	BaseMod.loadCustomStrings(CardStrings.class, loadJson(getLocalizationPath() + "AscensionCardStrings.json"));
     	BaseMod.loadCustomStrings(BlightStrings.class, loadJson(getLocalizationPath() + "AscensionBlightStrings.json"));
+    	
+    	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "AscensionUiStrings.json"));
+    	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "AscensionDesc.json"));
+    	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "AscensionMinusDesc.json"));
     	
     	logger.info("Done editing strings");
     }
@@ -185,65 +194,78 @@ EditKeywordsSubscriber
         return Gdx.files.internal(jsonPath).readString(String.valueOf(StandardCharsets.UTF_8));
     }
     
-    // !!! Giving player proper relics (and possibly cards) for the asc+ lvl chosen
+    // !!! Giving player proper relics (and possibly cards) for the asc lvl chosen
     public void receivePostDungeonInitialize() {
     	AbsoluteAscensionLevel = AbstractDungeon.ascensionLevel;
     	
-    	if(AbsoluteAscensionLevel >= 25)
+    	if(AbstractDungeon.floorNum == 0)
     	{
-    		AbstractPlayer.customMods.add("Blight Chests");
-    		AbstractDungeon.actNum = 4;
-    	}
-    	
-    	//ArrayList<String> relicsToAdd = new ArrayList<>();
-    	ArrayList<AbstractBlight> blightsToAdd = new ArrayList<>();
-    	
-    	//ArrayList<String> cardsToAdd = new ArrayList<>();
-    	if(AbsoluteAscensionLevel > 20) {
-    		if(AbsoluteAscensionLevel < 25) {
-    			blightsToAdd.add(new StarOfAscension());
-    		}
+	
+    		AscensionMod.BlightedRun = false;
     		
-    		if(AbsoluteAscensionLevel >= 22) {
-    			blightsToAdd.add(new CursedBank());
-    		}
-    		
-    		if(AbsoluteAscensionLevel >= 25) {
-    			blightsToAdd.add(new MegaStarOfAscension());
-    			blightsToAdd.add(new CursedFlame());
-    		}
+	    	if(AbsoluteAscensionLevel >= 25)
+	    	{
+	    		logger.info(AbstractPlayer.customMods.contains("Blight Chests"));
+	    		AbstractPlayer.customMods.add("Blight Chests");
+	    		AbstractDungeon.actNum = 4;
+	    		logger.info(AbstractDungeon.actNum);
+	    	}
+	    	
+	    	//ArrayList<String> relicsToAdd = new ArrayList<>();
+	    	ArrayList<AbstractBlight> blightsToAdd = new ArrayList<>();
+	    	
+	    	//ArrayList<String> cardsToAdd = new ArrayList<>();
+	    	if(AbsoluteAscensionLevel > 20) {
+	    		if(AbsoluteAscensionLevel < 25) {
+	    			blightsToAdd.add(new StarOfAscension());
+	    		}
+	    		
+	    		if(AbsoluteAscensionLevel >= 22) {
+	    			blightsToAdd.add(new CursedBank());
+	    		}
+	    		
+	    		if(AbsoluteAscensionLevel >= 24) {
+	    			AbstractDungeon.player.masterDeck.removeCard(AbstractDungeon.player.masterDeck.getBottomCard()); 
+	    			AbstractDungeon.player.masterDeck.addToTop(new ascensionMod.cards.AscendersBane());
+	    		}
+	    		
+	    		if(AbsoluteAscensionLevel >= 25) {
+	    			blightsToAdd.add(new MegaStarOfAscension());
+	    			blightsToAdd.add(new CursedFlame());
+	    		}
+	    	}
+	    	
+	    	// ascension minus levels
+	    	if (AscensionMod.AbsoluteAscensionLevel <= -9) {
+				AbstractDungeon.player.increaseMaxHp(AbstractDungeon.player.getAscensionMaxHPLoss(), false);
+			}
+			if (AscensionMod.AbsoluteAscensionLevel <= -18) {
+				AbstractDungeon.player.energy.energyMaster++;
+			}
+			if (AscensionMod.AbsoluteAscensionLevel <= -19) {
+				AbstractDungeon.player.masterHandSize++;
+			}
+	    	
+	    	
+	    	//add relics
+			/*int relicIndex = AbstractDungeon.player.relics.size();
+			int relicRemoveIndex = relicsToAdd.size() - 1;
+			while (relicsToAdd.size() > 0) {
+				logger.info("Attempting to add: " + relicsToAdd.get(relicRemoveIndex));
+				AbstractRelic relic = RelicLibrary.getRelic(relicsToAdd.remove(relicRemoveIndex));
+				logger.info("Found relic is: " + relic);
+				AbstractRelic relicCopy = relic.makeCopy();
+				relicCopy.instantObtain(AbstractDungeon.player, relicIndex, true);
+				relicRemoveIndex--;
+				relicIndex++;
+			}*/
+			
+			//add blights
+			for(AbstractBlight b : blightsToAdd)
+			{
+				b.instantObtain(AbstractDungeon.player, AbstractDungeon.player.blights.size(), true);
+			}
     	}
-    	
-    	// ascension minus levels
-    	if (AscensionMod.AbsoluteAscensionLevel <= -9) {
-			AbstractDungeon.player.increaseMaxHp(AbstractDungeon.player.getAscensionMaxHPLoss(), false);
-		}
-		if (AscensionMod.AbsoluteAscensionLevel <= -18) {
-			AbstractDungeon.player.energy.energyMaster++;
-		}
-		if (AscensionMod.AbsoluteAscensionLevel <= -19) {
-			AbstractDungeon.player.masterHandSize++;
-		}
-    	
-    	
-    	//add relics
-		/*int relicIndex = AbstractDungeon.player.relics.size();
-		int relicRemoveIndex = relicsToAdd.size() - 1;
-		while (relicsToAdd.size() > 0) {
-			logger.info("Attempting to add: " + relicsToAdd.get(relicRemoveIndex));
-			AbstractRelic relic = RelicLibrary.getRelic(relicsToAdd.remove(relicRemoveIndex));
-			logger.info("Found relic is: " + relic);
-			AbstractRelic relicCopy = relic.makeCopy();
-			relicCopy.instantObtain(AbstractDungeon.player, relicIndex, true);
-			relicRemoveIndex--;
-			relicIndex++;
-		}*/
-		
-		//add blights
-		for(AbstractBlight b : blightsToAdd)
-		{
-			b.instantObtain(AbstractDungeon.player, AbstractDungeon.player.blights.size(), true);
-		}
 	}
     
     public static String getLocalizationPath()
@@ -255,6 +277,9 @@ EditKeywordsSubscriber
     		
     	case KOR:
     		return "localization/kor/";
+    		
+    	case ZHS:
+    		return "localization/zhs/";
     		
     	default:
     		return "localization/eng/";	

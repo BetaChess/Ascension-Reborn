@@ -1,0 +1,23 @@
+{
+    "CELESTIAL": {
+    "NAMES":[
+        "缥缈",
+        "已停用"
+    ],
+    "DESCRIPTION": "除非达到特定进阶，否则缥缈即虚无 "
+  },
+    "SOULBOUND": {
+    "NAMES":[
+        "灵魂绑定",
+        "已停用"
+    ],
+    "DESCRIPTION": "Removing a Soulbound card will result in tearing of the soul. (此效果仅在进阶5及以上存在)"
+  },
+    "FLESHBOUND": {
+    "NAMES":[
+        "fleshbound",
+        "已停用"
+    ],
+    "DESCRIPTION": "Removing a Fleshbound card will result in permanent or temporary damage to the body. (此效果仅在进阶5及以上存在)"
+  } 
+}

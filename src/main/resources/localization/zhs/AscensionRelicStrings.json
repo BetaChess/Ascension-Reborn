@@ -1,0 +1,49 @@
+{
+    // DEPRECATED
+    
+    "AscMod:TestOfThePizza": {
+        "NAME": "Pronto Pepper Pizza",
+        "FLAVOR": "Pizza can't melt LEGO bars...  or can it? ",
+        "DESCRIPTIONS": [
+            "Upon pickup, raise your Max HP by #b",  
+            ", and take #b",
+            " damage"
+        ]
+    },
+    "AscMod:JSpecialRelic": {
+        "NAME": "Pog Champ",
+        "FLAVOR": "A very special relic for a very special person. Kappa",
+        "DESCRIPTIONS": [
+            "Very Special Relic ",
+            "We don't need to rest bois! "
+        ]
+    },
+    "AscMod:CursedBank": {
+        "NAME": "Hungry Bank",
+        "FLAVOR": "Is this thing getting lighter? ",
+        "DESCRIPTIONS": [
+            "Whenever you gain gold lose #b15 % of the gold gained"
+        ]
+    },
+    "AscMod:CursedFlame": {
+        "NAME": "Cursed Flame",
+        "FLAVOR": "The flame lights the area with darkness, yet my vision is not impaired. ",
+        "DESCRIPTIONS": [
+            "Every time you open a boss chest obtain a random curse "
+        ]
+    }, 
+    "AscMod:StarOfAscension": {
+        "NAME": "Star of Ascension",
+        "FLAVOR": "Where am I keeping this thing? And why?",
+        "DESCRIPTIONS": [
+            "A star given to you by The Spire. It has an ominous feel to it. "
+        ]
+    },
+    "AscMod:MegaStarOfAscension": {
+        "NAME": "Star of Ascension",
+        "FLAVOR": "Where am I keeping this thing? And why?",
+        "DESCRIPTIONS": [
+            "A star given to you by The Spire. It feels like it attracts evil. "
+        ]
+    }
+}

@@ -41,20 +41,20 @@ public class AscensionPatches
 	
 	  
 	
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	private static Map<String, UIStrings> UiString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson(AscensionMod.getLocalizationPath() + "AscensionDesc.json"), getTrueType(UIStrings.class));
 	@SuppressWarnings("unchecked")
 	private static Map<String, UIStrings> UiMinusString = (Map<String, UIStrings>)BaseMod.gson.fromJson(loadJson(AscensionMod.getLocalizationPath() + "AscensionMinusDesc.json"), getTrueType(UIStrings.class));
+	*/
 	
-	private static UIStrings AscensionLevelStrings = UiString.get("AscensionModeDescriptions");
-	private static UIStrings AscensionMinusLevelStrings = UiMinusString.get("AscensionMinusDescriptions");
+	private static UIStrings AscensionLevelStrings = CardCrawlGame.languagePack.getUIString("AscensionModeDescriptions"); //UiString.get("AscensionModeDescriptions");
+	private static UIStrings AscensionMinusLevelStrings = CardCrawlGame.languagePack.getUIString("AscensionMinusDescriptions"); //UiMinusString.get("AscensionMinusDescriptions");
 	
 	private static String[] AscensionLevels = AscensionLevelStrings.TEXT;
 	private static String[] AscensionMinusLevels = AscensionMinusLevelStrings.TEXT;
 	
-
 	
-	private static String loadJson(String jsonPath) {
+	/*private static String loadJson(String jsonPath) {
         return Gdx.files.internal(jsonPath).readString(String.valueOf(StandardCharsets.UTF_8));
     }
 	
@@ -63,7 +63,7 @@ public class AscensionPatches
 		 @SuppressWarnings("rawtypes")
 		HashMap TypeTokens = (HashMap)ReflectionHacks.getPrivateStatic(BaseMod.class, "typeTokens");
 		 return (Type)TypeTokens.get(type);
-	}
+	}*/
 	
 	@SpirePatch(
 		cls = "com.megacrit.cardcrawl.screens.charSelect.CharacterOption",
@@ -478,17 +478,51 @@ public class AscensionPatches
 				e.printStackTrace();
 			}
 			ascRightHb.update();
+			
+			Field ascLeftHbF = null;
+			try {
+				ascLeftHbF = CustomModeScreen.class.getDeclaredField("ascLeftHb");
+			} catch (NoSuchFieldException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ascLeftHbF.setAccessible(true);
+			Hitbox ascLeftHb = null;
+			try {
+				ascLeftHb = (Hitbox)ascLeftHbF.get(__instance);
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ascLeftHb.update();
+			
+			
+			
+			
 			if ((ascRightHb.clicked) || (CInputActionSet.pageRightViewExhaust.isJustPressed())) {
 				//playClickFinishSound();
 				
 				ascRightHb.clicked = false;
 				__instance.ascensionLevel += 1;
 				if (__instance.ascensionLevel > AscensionMod.MAXMODASCENSIONLEVEL) {
+					__instance.ascensionLevel = AscensionMod.MINMODASCENSIONLEVEL;
+				}
+				
+				__instance.isAscensionMode = true;
+			}
+			
+			if ((ascLeftHb.clicked) || (CInputActionSet.pageRightViewExhaust.isJustPressed())) {
+				//playClickFinishSound();
+				
+				ascLeftHb.clicked = false;
+				__instance.ascensionLevel -= 1;
+				if (__instance.ascensionLevel < AscensionMod.MINMODASCENSIONLEVEL) {
 					__instance.ascensionLevel = AscensionMod.MAXMODASCENSIONLEVEL;
 				}
 				
 				__instance.isAscensionMode = true;
 			}
+			
 			AscensionMod.AbsoluteAscensionLevel = __instance.ascensionLevel;
 		}
 	}

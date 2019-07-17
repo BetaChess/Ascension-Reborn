@@ -1,4 +1,4 @@
-package ascensionMod.stspatches.plus;
+	package ascensionMod.stspatches.plus;
 
 import java.lang.reflect.Field;
 
@@ -33,7 +33,7 @@ public class BossChestPatch {
 		@SuppressWarnings("rawtypes")
 		public static SpireReturn Prefix(BossChest __instance, final boolean bossChest)
 		{
-			if(!(AscensionMod.AbsoluteAscensionLevel < 25))
+			if(!(AscensionMod.AbsoluteAscensionLevel < 25) && AbstractDungeon.actNum < 7)
 			{
 				if(CursedFlame.count == 0)
 				{
@@ -42,9 +42,11 @@ public class BossChestPatch {
 				
 				logger.info("OPEN");
 				logger.info(CursedFlame.count);
+				logger.info(AbstractPlayer.customMods.contains("Blight Chests"));
+				logger.info(AbstractDungeon.actNum);
 
 				
-				if(CursedFlame.count > 0)
+				if(CursedFlame.count == 1)
 				{
 					logger.info("getting relics");
 					while(AbstractPlayer.customMods.contains("Blight Chests"))
@@ -61,7 +63,7 @@ public class BossChestPatch {
 			            }
 					}
 		            
-		            CursedFlame.count++;
+		            CursedFlame.count = 1;
 					
 		            return SpireReturn.Continue();
 				}
@@ -86,7 +88,7 @@ public class BossChestPatch {
 	{
 		public static void Postfix(BossRelicSelectScreen __instance, final AbstractBlight b)
 		{
-			if(!(AscensionMod.AbsoluteAscensionLevel < 25))
+			if(!(AscensionMod.AbsoluteAscensionLevel < 25) && AbstractDungeon.actNum < 7)
 			{
 				hasRunOnce = !hasRunOnce;
 				
@@ -133,7 +135,7 @@ public class BossChestPatch {
 	{
 		public static void Postfix(BossRelicSelectScreen __instance, final AbstractRelic r)
 		{
-			if(!(AscensionMod.AbsoluteAscensionLevel < 25))
+			if(!(AscensionMod.AbsoluteAscensionLevel < 25) && AbstractDungeon.actNum < 7)
 			{
 				AbstractPlayer.customMods.add("Blight Chests");
 			}

@@ -1,0 +1,9 @@
+{
+    "CustomAscensionScreen": {
+        "TEXT": ["Close"]
+    },
+    
+    "CharSelectStrings": {
+        "TEXT": ["Custom Ascension"]
+    }
+}

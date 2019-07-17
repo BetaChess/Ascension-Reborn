@@ -1,32 +1,63 @@
 {
     "AscensionModeDescriptions": {
-    "TEXT": [
-        "Elites spawn more often.",
-        "Normal enemies are deadlier.",
-        "Elites are deadlier.",
-        "Bosses are deadlier.",
-        "Heal less after Boss battles.",
-        "Start each run damaged.",
-        "Normal enemies are tougher.",
-        "Elites are tougher.",
-        "Bosses are tougher.",
-        "Start each run cursed.",
-        "Fewer Potion Slots.",
-        "Upgraded cards appear less often.",
-        "Poor bosses.",
-        "Lower Max HP.",
-        "Unfavorable Events.",
-        "Shops are more costly.",
-        "Normal enemies have more challenging movesets and abilities.",
-        "Elites have more challenging movesets and abilities.",
-        "Bosses have more challenging movesets and abilities.",
-        "Double Boss.",
-        "Merchant's card removal now costs more.",
-        "Some of your gold is eaten.",
-        "Healing is less effective.",
-        "Ascender's bane is no longer ethereal.",
-        "(Max Level) Choose a blight before every boss relic. "
-    ]
-  }
+        "TEXT": [
+            "Elites spawn more often.",
+            "Normal enemies are deadlier.",
+            "Elites are deadlier.",
+            "Bosses are deadlier.",
+            "Heal less after Boss battles.",
+            "Start each run damaged.",
+            "Normal enemies are tougher.",
+            "Elites are tougher.",
+            "Bosses are tougher.",
+            "Start each run cursed.",
+            "Fewer Potion Slots.",
+            "Upgraded cards appear less often.",
+            "Poor bosses.",
+            "Lower Max HP.",
+            "Unfavorable Events.",
+            "Shops are more costly.",
+            "Normal enemies have more challenging movesets and abilities.",
+            "Elites have more challenging movesets and abilities.",
+            "Bosses have more challenging movesets and abilities.",
+            "Double Boss.",
+            "Merchant's card removal now costs more.",
+            "Some of your gold is eaten.",
+            "Healing is less effective.",
+            "Ascender's bane is no longer ethereal.",
+            "(Max Level) Choose a blight before every boss relic. "
+        ]
+    },
+    
+    
+    "ShortAscensionModeDescriptions": {
+        "TEXT": [
+            "More elite spawns",
+            "Deadlier Normies",
+            "Deadlier Elites",
+            "Deadlier Bosses",
+            "Less post-battle heal",
+            "Damaged start",
+            "Tougher Normies",
+            "Tougher Elites",
+            "Tougher Bosses",
+            "Cursed beginnings",
+            "Fewer Potion Slots",
+            "Fewer upgraded cards",
+            "Poor Bosses",
+            "Lower Max HP",
+            "Unfavorable events",
+            "Expensive shops",
+            "Advanced Normies",
+            "Advanced Elites",
+            "Advanced Bosses",
+            "Double Boss",
+            "Costly card removal",
+            "Less gold gain",
+            "Bad healing",
+            "Stronger start curse",
+            "Blighted Boss relic"
+        ]
+    }
 }
  

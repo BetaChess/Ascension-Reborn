@@ -1,0 +1,26 @@
+{
+    "AscMod:CursedBank": {
+        "NAME": "受诅存钱罐",
+        "DESCRIPTION": [
+            "这个饥饿的存钱罐会吃掉一部分你获取的金币"
+        ]
+    },
+    "AscMod:CursedFlame": {
+        "NAME": "诅咒之火",
+        "DESCRIPTION": [
+            "每当你击杀一个boss时，尖塔的永恒之火便会惩罚你 "
+        ]
+    },
+    "AscMod:MegaStarOfAscension": {
+        "NAME": "进阶之星",
+        "DESCRIPTION": [
+            "一颗尖塔赐予你的星星，他好像吸引着什么邪恶的东西 "
+        ]
+    },
+    "AscMod:StarOfAscension": {
+        "NAME": "进阶之星",
+        "DESCRIPTION": [
+            "一颗尖塔赐予你的星星，你对此有种不祥的预感 "
+        ]
+    }
+}
