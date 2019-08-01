@@ -7,15 +7,18 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.dungeons.Exordium;
 import com.megacrit.cardcrawl.dungeons.TheBeyond;
 import com.megacrit.cardcrawl.dungeons.TheCity;
+import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 
 import ascensionMod.AscensionMod;
+import ascensionMod.UI.CharSelectScreenUI;
 
 public class MoreUpgradedCardsPatch {
 
 	@SpirePatch(clz = Exordium.class, method = "initializeLevelSpecificChances")
 	public static class ExordiumPatch {
 		public static void Postfix(Exordium __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -7) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -7 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(6).toggledOn)) {
 				try {
 					Field field = AbstractDungeon.class.getDeclaredField("cardUpgradedChance");
 					field.setAccessible(true);
@@ -30,7 +33,7 @@ public class MoreUpgradedCardsPatch {
 	@SpirePatch(clz = TheCity.class, method = "initializeLevelSpecificChances")
 	public static class TheCityPatch {
 		public static void Postfix(TheCity __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -7) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -7 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(6).toggledOn)) {
 				try {
 					Field field = AbstractDungeon.class.getDeclaredField("cardUpgradedChance");
 					field.setAccessible(true);
@@ -45,7 +48,7 @@ public class MoreUpgradedCardsPatch {
 	@SpirePatch(clz = TheBeyond.class, method = "initializeLevelSpecificChances")
 	public static class TheBeyondPatch {
 		public static void Postfix(TheBeyond __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -7) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -7 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(6).toggledOn)) {
 				try {
 					Field field = AbstractDungeon.class.getDeclaredField("cardUpgradedChance");
 					field.setAccessible(true);

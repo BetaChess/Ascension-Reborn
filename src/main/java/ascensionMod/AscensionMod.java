@@ -27,6 +27,7 @@ import java.lang.reflect.*;
 
 import java.util.*;
 
+import ascensionMod.UI.CharSelectScreenUI;
 import ascensionMod.blights.*;
 
 @SpireInitializer
@@ -49,6 +50,8 @@ EditCardsSubscriber
     
     public static final int MAXMODASCENSIONLEVEL = 25;
     public static final int MINMODASCENSIONLEVEL = -20;
+    
+    public static boolean customAscensionRun = true;
     
     
     public static int AbsoluteAscensionLevel = 20;
@@ -198,12 +201,15 @@ EditCardsSubscriber
     public void receivePostDungeonInitialize() {
     	AbsoluteAscensionLevel = AbstractDungeon.ascensionLevel;
     	
+    	if (customAscensionRun)
+    		AbsoluteAscensionLevel = 0;
+    	
     	if(AbstractDungeon.floorNum == 0)
     	{
 	
     		AscensionMod.BlightedRun = false;
     		
-	    	if(AbsoluteAscensionLevel >= 25)
+	    	if(AbsoluteAscensionLevel >= 25  || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(24).toggledOn))
 	    	{
 	    		logger.info(AbstractPlayer.customMods.contains("Blight Chests"));
 	    		AbstractPlayer.customMods.add("Blight Chests");
@@ -235,14 +241,51 @@ EditCardsSubscriber
 	    		}
 	    	}
 	    	
+	    	if (AscensionMod.customAscensionRun)
+	    	{
+	    		int count = 0;
+	    		for (int i = 0; i < 5; i++)
+	    		{
+	    			if (CharSelectScreenUI.ascScreen.posAscButtons.get(19+i).toggledOn)
+	    			{
+	    				count++;
+	    			}
+	    		}
+	    		
+	    		if (count < 5 && count > 0)
+	    		{
+	    			blightsToAdd.add(new StarOfAscension());
+	    		}
+	    		else if (count == 5)
+	    		{
+	    			blightsToAdd.add(new MegaStarOfAscension());
+	    		}
+	    		
+	    		if (CharSelectScreenUI.ascScreen.posAscButtons.get(21).toggledOn)
+	    		{
+	    			blightsToAdd.add(new CursedBank());
+	    		}
+	    		
+	    		if (CharSelectScreenUI.ascScreen.posAscButtons.get(24).toggledOn)
+	    		{
+	    			blightsToAdd.add(new CursedFlame());
+	    		}
+	    		
+	    		if(CharSelectScreenUI.ascScreen.posAscButtons.get(23).toggledOn) {
+	    			AbstractDungeon.player.masterDeck.removeCard(AbstractDungeon.player.masterDeck.getBottomCard()); 
+	    			AbstractDungeon.player.masterDeck.addToTop(new ascensionMod.cards.AscendersBane());
+	    		}
+	    		
+	    	}
+	    	
 	    	// ascension minus levels
-	    	if (AscensionMod.AbsoluteAscensionLevel <= -9) {
+	    	if (AscensionMod.AbsoluteAscensionLevel <= -9 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(8).toggledOn)) {
 				AbstractDungeon.player.increaseMaxHp(AbstractDungeon.player.getAscensionMaxHPLoss(), false);
 			}
-			if (AscensionMod.AbsoluteAscensionLevel <= -18) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -18 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(17).toggledOn)) {
 				AbstractDungeon.player.energy.energyMaster++;
 			}
-			if (AscensionMod.AbsoluteAscensionLevel <= -19) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -19 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(18).toggledOn)) {
 				AbstractDungeon.player.masterHandSize++;
 			}
 	    	

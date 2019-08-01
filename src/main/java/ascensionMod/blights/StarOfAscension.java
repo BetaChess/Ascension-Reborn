@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.helpers.PowerTip;
 
 import ascensionMod.AscensionMod;
+import ascensionMod.UI.CharSelectScreenUI;
 
 public class StarOfAscension extends CustomBlight {
 	public static final String ID = "AscMod:StarOfAscension";
@@ -19,7 +20,7 @@ public class StarOfAscension extends CustomBlight {
     
     @Override
     public void onEquip() {
-    	if(AscensionMod.AbsoluteAscensionLevel > 20) {
+    	if(AscensionMod.AbsoluteAscensionLevel >= 21 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(20).toggledOn)) {
     		com.megacrit.cardcrawl.shop.ShopScreen.purgeCost = newPurgecost;
         	com.megacrit.cardcrawl.shop.ShopScreen.actualPurgeCost = newPurgecost;
     	}
@@ -27,7 +28,7 @@ public class StarOfAscension extends CustomBlight {
     
     @Override
     public int onPlayerHeal(int healAmount) {
-    	if(AscensionMod.AbsoluteAscensionLevel >= 23) {
+    	if(AscensionMod.AbsoluteAscensionLevel >= 23 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(22).toggledOn)) {
     		flash();
     	}
     	

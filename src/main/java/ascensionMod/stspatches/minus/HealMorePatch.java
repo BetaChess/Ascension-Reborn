@@ -6,12 +6,13 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 
 import ascensionMod.AscensionMod;
+import ascensionMod.UI.CharSelectScreenUI;
 
 public class HealMorePatch {
 	@SpirePatch(clz = AbstractCreature.class, method = "heal", paramtypez = { int.class, boolean.class })
 	public static class HealMore {
 		public static void Prefix(AbstractCreature __instance, @ByRef int[] healAmount, boolean showEffect) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -13) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -13  || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(12).toggledOn)) {
 				healAmount[0] = MathUtils.round(healAmount[0] * 1.4F);
 			}
 		}

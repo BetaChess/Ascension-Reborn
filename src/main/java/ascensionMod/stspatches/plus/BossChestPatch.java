@@ -16,6 +16,7 @@ import com.megacrit.cardcrawl.rooms.TreasureRoomBoss;
 import com.megacrit.cardcrawl.screens.select.BossRelicSelectScreen;
 
 import ascensionMod.AscensionMod;
+import ascensionMod.UI.CharSelectScreenUI;
 import ascensionMod.blights.CursedFlame;
 import ascensionMod.stspatches.AscensionPatches;
 
@@ -33,7 +34,7 @@ public class BossChestPatch {
 		@SuppressWarnings("rawtypes")
 		public static SpireReturn Prefix(BossChest __instance, final boolean bossChest)
 		{
-			if(!(AscensionMod.AbsoluteAscensionLevel < 25) && AbstractDungeon.actNum < 7)
+			if(!(AscensionMod.AbsoluteAscensionLevel < 25) || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(24).toggledOn) && AbstractDungeon.actNum < 7)
 			{
 				if(CursedFlame.count == 0)
 				{
@@ -88,7 +89,7 @@ public class BossChestPatch {
 	{
 		public static void Postfix(BossRelicSelectScreen __instance, final AbstractBlight b)
 		{
-			if(!(AscensionMod.AbsoluteAscensionLevel < 25) && AbstractDungeon.actNum < 7)
+			if(!(AscensionMod.AbsoluteAscensionLevel < 25)  || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(24).toggledOn) && AbstractDungeon.actNum < 7)
 			{
 				hasRunOnce = !hasRunOnce;
 				
@@ -135,7 +136,7 @@ public class BossChestPatch {
 	{
 		public static void Postfix(BossRelicSelectScreen __instance, final AbstractRelic r)
 		{
-			if(!(AscensionMod.AbsoluteAscensionLevel < 25) && AbstractDungeon.actNum < 7)
+			if(!(AscensionMod.AbsoluteAscensionLevel < 25) || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(24).toggledOn) && AbstractDungeon.actNum < 7)
 			{
 				AbstractPlayer.customMods.add("Blight Chests");
 			}

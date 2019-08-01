@@ -24,6 +24,7 @@ import com.megacrit.cardcrawl.ui.buttons.Button;
 
 import ascensionMod.AscensionMod;
 import ascensionMod.UI.buttons.AscButton;
+import ascensionMod.UI.buttons.AscToggleButton;
 import ascensionMod.UI.buttons.CancelButton;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +52,7 @@ public class AscModScreen {
     
     // UI Hitboxes
     private Hitbox dropDownHitbox;
+    private Hitbox presetHitbox;
     
     // UI Textures
     private static Texture foreground = ImageMaster.loadImage("ui/cover.png");
@@ -72,11 +74,8 @@ public class AscModScreen {
     private AscButton arrowRight;
     private AscButton arrowLeft;
     
-    private ArrayList<AscButton> negAscButtons = new ArrayList<>(); 
-    private ArrayList<AscButton> posAscButtons = new ArrayList<>();
-    
-    
-	private ArrayList<Hitbox> ascHitboxes = new ArrayList<>();
+    public ArrayList<AscToggleButton> negAscButtons = new ArrayList<>(); 
+    public ArrayList<AscToggleButton> posAscButtons = new ArrayList<>();
 	
 	//private Hitbox customAscensionModeHb;
 	
@@ -93,8 +92,10 @@ public class AscModScreen {
         this.scrollY = 0.0f;
         this.calculateScrollBounds();
 		
+        
 		//(customAscensionModeHb = new Hitbox(100.0f * Settings.scale, 50.0f * Settings.scale)).move(Settings.WIDTH / 2.0f - 50.0f * Settings.scale, 70.0f * Settings.scale);
 		(dropDownHitbox = new Hitbox(500.0f * Settings.scale, 60.0f * Settings.scale)).move(Settings.WIDTH / 2.0f, Settings.HEIGHT - 175.0f * Settings.scale);
+		(presetHitbox = new Hitbox(Settings.scale * 570, Settings.scale * 802)).move(Settings.WIDTH / 2.0f - Settings.scale * 612 / 2, Settings.HEIGHT - 980.0f * Settings.scale + Settings.scale * scrollY);
 		
 		applyButton = new AscButton(
 				Settings.WIDTH / 2.0f - Settings.scale * 201 / 2 - Settings.scale * 410.0f, 
@@ -126,7 +127,7 @@ public class AscModScreen {
 		for (int i = 0; i < Math.abs(AscensionMod.MINMODASCENSIONLEVEL) - 1; i ++)
 		{
 			negAscButtons.add(
-				new AscButton(
+				new AscToggleButton(
 						Settings.WIDTH / 2.0f - Settings.scale * 480 * 1.5f / 2 - 340 * Settings.scale, 
 						0, // TEMP, updated in rendering
 						620.0f * Settings.scale,
@@ -138,7 +139,7 @@ public class AscModScreen {
 		}
 		
 		negAscButtons.add(
-			new AscButton(
+			new AscToggleButton(
 					Settings.WIDTH / 2.0f - Settings.scale * 480 * 1.5f / 2 - 340 * Settings.scale, 
 					0, // TEMP, updated in rendering
 					620.0f * Settings.scale,
@@ -152,7 +153,7 @@ public class AscModScreen {
 		for (int i = 0; i < Math.abs(AscensionMod.MAXMODASCENSIONLEVEL); i ++)
 		{
 			posAscButtons.add(
-				new AscButton(
+				new AscToggleButton(
 						Settings.WIDTH / 2.0f + Settings.scale * 510 * 1.5f / 2 - 300 * Settings.scale, 
 						0, // TEMP, updated in rendering
 						620.0f * Settings.scale,
@@ -162,15 +163,9 @@ public class AscModScreen {
 						)
 			);
 		}
-		
-				
-		
-				
-		for (int i=0; i<AscensionMod.MAXMODASCENSIONLEVEL; ++i) {
-            ascHitboxes.add(new Hitbox(430.0f * Settings.scale, 40.0f * Settings.scale));
-        }
 
         //configHb = new Hitbox(100 * Settings.scale, 40 * Settings.scale);
+		prepareContradictors();
 	}
 
 	
@@ -194,15 +189,6 @@ public class AscModScreen {
 	
 	public void update()
     {
-        button.update();
-        dropDownHitbox.update();
-        
-        arrowRight.update();
-        arrowLeft.update();
-        
-        copyToPlaceHolderButton.update();
-        applyButton.update();
-        
         // Update negative buttons
         for (int i = 0; i < Math.abs(AscensionMod.MINMODASCENSIONLEVEL); i++)
         {
@@ -215,7 +201,13 @@ public class AscModScreen {
         	posAscButtons.get(i).update();
         }
         
+        arrowRight.update(); // Code needs to be written
+        arrowLeft.update(); // Code needs to be written
         
+        copyToPlaceHolderButton.update(); // Code needs to be written
+        applyButton.update(); // Code needs to be written
+        
+        button.update();
         if (button.hb.clicked || InputHelper.pressedEscape) 
         {
             button.hb.clicked = false;
@@ -226,32 +218,37 @@ public class AscModScreen {
             CardCrawlGame.mainMenuScreen.lighten();
         }
         
-        /*if (dropDownHitbox.hovered)
-        {
-        	AscensionMod.logger.info("HERE");
-        }*/
-        if (InputHelper.justClickedLeft && dropDownHitbox.hovered)
+        dropDownHitbox.update();
+        if (InputHelper.justClickedLeft && dropDownHitbox.hovered || dropDownHitbox.clicked)
         {
         	dropDownActive = !dropDownActive;
         }
         
+        presetHitbox.update();
+        if (presetHitbox.hovered && dropDownActive)
+        {
+        	AscensionMod.logger.info("REEEEEEEEEEEEEEEEEEEEEEE!");
+        	for(int i = 0; i < 10; i++)
+    		{
+        		negAscButtons.get(i).hb.hovered = false;
+        		posAscButtons.get(i).hb.hovered = false;
+    		}
+    	
+        }
+        
+     // Update negative toggles
+        for (int i = 0; i < Math.abs(AscensionMod.MINMODASCENSIONLEVEL); i++)
+        {
+        	negAscButtons.get(i).updateToggle();
+        }
+        
+        // Update positive toggles
+        for (int i = 0; i < Math.abs(AscensionMod.MAXMODASCENSIONLEVEL); i++)
+        {
+        	posAscButtons.get(i).updateToggle();
+        }
         
         updateScrolling();
-        float tmpY = 0;
-        for (int i = 0; i < ascHitboxes.size(); ++i) {
-            ascHitboxes.get(i).x = 90.0f * Settings.scale;
-            ascHitboxes.get(i).y = tmpY + scrollY - 30.0f * Settings.scale;
-            ascHitboxes.get(i).update();
-            if (ascHitboxes.get(i).hovered && InputHelper.isMouseDown) {
-                ascHitboxes.get(i).clickStarted = true;
-            }
-            tmpY -= 45.0f * Settings.scale;
-
-            if (ascHitboxes.get(i).clicked) {
-                ascHitboxes.get(i).clicked = false;
-                //selectedMod = i;
-            }
-        }
 
         /*if (baseModBadges != null && selectedMod >= 0 && baseModBadges.get(Loader.MODINFOS[selectedMod].jarURL) != null) {
             configHb.update();
@@ -260,7 +257,6 @@ public class AscModScreen {
             }
         }*/
         
-
         InputHelper.justClickedLeft = false;
     }
 
@@ -408,6 +404,7 @@ public class AscModScreen {
         	posAscButtons.get(i).render(sb);
         }
         
+        
         // TEXT
         for (int i = 0; i < AscensionMod.MAXMODASCENSIONLEVEL; i++)
         {
@@ -422,7 +419,7 @@ public class AscModScreen {
         if(dropDownActive)
         {
 	        sb.draw(presetMenu, 
-	        		Settings.WIDTH / 2.0f - Settings.scale * 612 / 2, Settings.HEIGHT - 950.0f * Settings.scale, // x and y
+	        		Settings.WIDTH / 2.0f - Settings.scale * 612 / 2, Settings.HEIGHT - 980.0f * Settings.scale + Settings.scale * scrollY, // x and y
 	        		0.0f, 0.0f, // origin x and y
 	        		Settings.scale * 612, Settings.scale * 802, // width and height 
 	        		1.0f, 1.0f, // scaling x and y
@@ -434,15 +431,21 @@ public class AscModScreen {
 	        
 	        // Arrows in dropdown menu:
 	        // Right arrow
+	        arrowRight.y = Settings.HEIGHT - 900.0f * Settings.scale + Settings.scale * scrollY;
         	arrowRight.render(sb);
         	
         	// Left arrow 
+        	arrowLeft.y = Settings.HEIGHT - 900.0f * Settings.scale + Settings.scale * scrollY;
         	arrowLeft.render(sb);
+        	
+        	
         }
+        
+        presetHitbox.move(Settings.WIDTH / 2.0f, Settings.HEIGHT - 980.0f * Settings.scale / 2 - 70.0f * Settings.scale + Settings.scale * scrollY);
         
         // Banner to display preset:
         sb.draw(presetBanner, 
-        		Settings.WIDTH / 2.0f - Settings.scale * 1112 / 2, Settings.HEIGHT - 315.0f * Settings.scale, // x and y
+        		Settings.WIDTH / 2.0f - Settings.scale * 1112 / 2, Settings.HEIGHT - 345.0f * Settings.scale + Settings.scale * scrollY, // x and y
         		0.0f, 0.0f, // origin x and y
         		Settings.scale * 1112, Settings.scale * 238, // width and height 
         		1.0f, 1.0f, // scaling x and y
@@ -452,9 +455,12 @@ public class AscModScreen {
         		false, false // flip x and flip y
         		);
         
+       
+        
+        
         // Arrow next to text:
         sb.draw(dropDownArrow, 
-        		Settings.WIDTH / 2.0f - Settings.scale * 57 / 2 + 200.0f * Settings.scale, Settings.HEIGHT - 198.0f * Settings.scale, // x and y
+        		Settings.WIDTH / 2.0f - Settings.scale * 57 / 2 + 200.0f * Settings.scale, Settings.HEIGHT - 228.0f * Settings.scale + Settings.scale * scrollY, // x and y
         		0.0f, 0.0f, // origin x and y
         		Settings.scale * 42.75f, Settings.scale * 40.5f, // width and height 
         		1.0f, 1.0f, // scaling x and y
@@ -467,12 +473,17 @@ public class AscModScreen {
         // Text on the banner:
         FontHelper.renderFontCentered(sb, FontHelper.SCP_cardTitleFont_small, "None Selected",
                 Settings.WIDTH / 2.0f, // x
-                Settings.HEIGHT - 175.0f * Settings.scale, // y
+                Settings.HEIGHT - 205.0f * Settings.scale + Settings.scale * scrollY, // y
                 Settings.GOLD_COLOR);
         
+        // Update hitbox position
+        dropDownHitbox.move(Settings.WIDTH / 2.0f, Settings.HEIGHT - 205.0f * Settings.scale + Settings.scale * scrollY);
+        
         // Button
+        applyButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
         applyButton.render(sb);
         
+        copyToPlaceHolderButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
         copyToPlaceHolderButton.render(sb);
         
         
@@ -578,12 +589,6 @@ public class AscModScreen {
             sb.flush();
             ScissorStack.popScissors();
         }*/
-        
-
-
-        for (Hitbox hitbox : ascHitboxes) {
-            hitbox.render(sb);
-        }
 
         button.render(sb);
         
@@ -626,4 +631,35 @@ public class AscModScreen {
         this.scrollUpperBound = Settings.HEIGHT * Settings.scale / 2 + AscensionMod.MAXMODASCENSIONLEVEL * 90.0f * Settings.scale - 200.0f * Settings.scale;
         this.scrollLowerBound = 50.0f * Settings.scale;
     }
+    
+    private void prepareContradictors()
+    {
+    	// Negative contradictions
+    	negAscButtons.get(0).contradictor = posAscButtons.get(1);
+    	negAscButtons.get(1).contradictor = posAscButtons.get(2);
+    	negAscButtons.get(2).contradictor = posAscButtons.get(3);
+    	negAscButtons.get(3).contradictor = posAscButtons.get(6);
+    	negAscButtons.get(4).contradictor = posAscButtons.get(7);
+    	negAscButtons.get(5).contradictor = posAscButtons.get(8);
+    	negAscButtons.get(6).contradictor = posAscButtons.get(11);
+    	negAscButtons.get(7).contradictor = posAscButtons.get(12);
+    	negAscButtons.get(8).contradictor = posAscButtons.get(13);
+    	negAscButtons.get(9).contradictor = posAscButtons.get(15);
+    	negAscButtons.get(11).contradictor = posAscButtons.get(21);
+    	negAscButtons.get(12).contradictor = posAscButtons.get(22);
+    	
+    	posAscButtons.get(1).contradictor = negAscButtons.get(0);
+    	posAscButtons.get(2).contradictor = negAscButtons.get(1);
+    	posAscButtons.get(3).contradictor = negAscButtons.get(2);
+    	posAscButtons.get(6).contradictor = negAscButtons.get(3);
+    	posAscButtons.get(7).contradictor = negAscButtons.get(4);
+    	posAscButtons.get(8).contradictor = negAscButtons.get(5);
+    	posAscButtons.get(11).contradictor = negAscButtons.get(6);
+    	posAscButtons.get(12).contradictor = negAscButtons.get(7);
+    	posAscButtons.get(13).contradictor = negAscButtons.get(8);
+    	posAscButtons.get(15).contradictor = negAscButtons.get(9);
+    	posAscButtons.get(21).contradictor = negAscButtons.get(11);
+    	posAscButtons.get(22).contradictor = negAscButtons.get(12);
+    }
+    
 }

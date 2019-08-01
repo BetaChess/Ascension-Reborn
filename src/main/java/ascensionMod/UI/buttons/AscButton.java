@@ -18,8 +18,8 @@ public class AscButton {
 	
 	public float x;
     public float y;
-    private Texture img;
-    protected Hitbox hb;
+    protected Texture img;
+    public Hitbox hb;
     protected Color activeColor;
     protected Color inactiveColor;
     public boolean pressed;

@@ -9,17 +9,18 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster.EnemyType;
 
 import ascensionMod.AscensionMod;
+import ascensionMod.UI.CharSelectScreenUI;
 
 public class MonsterPatch {
 
 	@SpirePatch(clz = AbstractMonster.class, method = "init")
 	public static class HealthPatch {
 		public static void Postfix(AbstractMonster __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -4 && __instance.type == EnemyType.NORMAL) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -4 && __instance.type == EnemyType.NORMAL || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(3).toggledOn && __instance.type == EnemyType.NORMAL)) {
 				__instance.maxHealth = __instance.currentHealth = MathUtils.ceil(__instance.maxHealth * .85F);
-			} else if (AscensionMod.AbsoluteAscensionLevel <= -5 && __instance.type == EnemyType.ELITE) {
+			} else if (AscensionMod.AbsoluteAscensionLevel <= -5 && __instance.type == EnemyType.ELITE || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(4).toggledOn && __instance.type == EnemyType.ELITE)) {
 				__instance.maxHealth = __instance.currentHealth = MathUtils.ceil(__instance.maxHealth * .85F);
-			} else if (AscensionMod.AbsoluteAscensionLevel <= -6 && __instance.type == EnemyType.BOSS) {
+			} else if (AscensionMod.AbsoluteAscensionLevel <= -6 && __instance.type == EnemyType.BOSS || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(5).toggledOn && __instance.type == EnemyType.BOSS)) {
 				__instance.maxHealth = __instance.currentHealth = MathUtils.ceil(__instance.maxHealth * .85F);
 			}
 		}
@@ -30,13 +31,13 @@ public class MonsterPatch {
 	public static class DamagePatch {
 		public static void Postfix(DamageInfo __instance, AbstractCreature damageSource, int base, DamageType type) {
 			if (damageSource instanceof AbstractMonster) {
-				if (AscensionMod.AbsoluteAscensionLevel <= -1 && ((AbstractMonster) damageSource).type == EnemyType.NORMAL) {
+				if (AscensionMod.AbsoluteAscensionLevel <= -1 && ((AbstractMonster) damageSource).type == EnemyType.NORMAL || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(0).toggledOn && ((AbstractMonster) damageSource).type == EnemyType.NORMAL)) {
 					__instance.base = MathUtils.ceil(__instance.base * 0.75F);
 					__instance.output = __instance.base;
-				} else if (AscensionMod.AbsoluteAscensionLevel <= -2 && ((AbstractMonster) damageSource).type == EnemyType.ELITE) {
+				} else if (AscensionMod.AbsoluteAscensionLevel <= -2 && ((AbstractMonster) damageSource).type == EnemyType.ELITE || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(1).toggledOn && ((AbstractMonster) damageSource).type == EnemyType.ELITE)) {
 					__instance.base = MathUtils.ceil(__instance.base * 0.75F);
 					__instance.output = __instance.base;
-				} else if (AscensionMod.AbsoluteAscensionLevel <= -3 && ((AbstractMonster) damageSource).type == EnemyType.BOSS) {
+				} else if (AscensionMod.AbsoluteAscensionLevel <= -3 && ((AbstractMonster) damageSource).type == EnemyType.BOSS || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(2).toggledOn && ((AbstractMonster) damageSource).type == EnemyType.BOSS)) {
 					__instance.base = MathUtils.ceil(__instance.base * 0.75F);
 					__instance.output = __instance.base;
 				}

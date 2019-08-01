@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
 import ascensionMod.AscensionMod;
+import ascensionMod.UI.CharSelectScreenUI;
 
 public class PlayerInitPatch {
 	/*@SpirePatch(clz = AbstractDungeon.class, method = "dungeonTransitionSetup")
@@ -20,7 +21,7 @@ public class PlayerInitPatch {
 	{
 		public static void Postfix(AbstractPlayer __instance) 
 		{
-			if (AscensionMod.AbsoluteAscensionLevel <= -20) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -20 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(19).toggledOn)) {
 				for (AbstractCard c : __instance.masterDeck.group)
 					c.upgrade();
 			}
