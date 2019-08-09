@@ -63,6 +63,10 @@ public class CharSelectScreenUI {
 			}
         	
         	(customAscensionModeHb = new Hitbox(ASC_LEFT_W + 100.0f * Settings.scale, 50.0f * Settings.scale)).move(Settings.WIDTH / 2.0f - ASC_LEFT_W / 2.0f - 50.0f * Settings.scale, 70.0f * Settings.scale);
+        	
+        	if (ascScreen == null) {
+            	ascScreen = new AscModScreen();
+            }
         }
     }
 	

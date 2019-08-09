@@ -41,7 +41,7 @@ public class BossChestPatch {
 					__instance.relics.clear();
 				}
 				
-				logger.info("OPEN");
+				logger.info("Ascension Reborn debug information. (State: open)");
 				logger.info(CursedFlame.count);
 				logger.info(AbstractPlayer.customMods.contains("Blight Chests"));
 				logger.info(AbstractDungeon.actNum);
@@ -49,7 +49,8 @@ public class BossChestPatch {
 				
 				if(CursedFlame.count == 1)
 				{
-					logger.info("getting relics");
+					
+					logger.info("Getting relics");
 					while(AbstractPlayer.customMods.contains("Blight Chests"))
 					{
 						AbstractPlayer.customMods.remove("Blight Chests");

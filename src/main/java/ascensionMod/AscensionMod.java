@@ -328,4 +328,23 @@ EditCardsSubscriber
     		return "localization/eng/";	
     	}
     }
+    
+    public static boolean getCustomToggleState(int level)
+    {
+    	if (level == 0)
+    	{
+    		logger.error("0 was passed to method: 'getCustomToggleState', returning false");
+    		return false;
+    	}
+    	if (level < 0)
+    	{
+    		return (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(Math.abs(level) - 1).toggledOn);
+    	}
+    	else
+    	{
+    		return (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(level - 1).toggledOn);
+    	}
+    	
+    }
+    
 }
