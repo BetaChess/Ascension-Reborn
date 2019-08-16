@@ -22,5 +22,32 @@
         "-19.每回合额外抽一张牌",
         "-20.(最低进阶) 所有的初始卡牌都是被升级过得; 所有的非boss宝箱都将额外含有一个遗物"
     ]
-  }
+  },
+    
+    
+    "ShortAscensionMinusDescriptions": {
+        "TEXT": [
+            "Less deadly Normies",
+            "Less deadly Elites",
+            "Less deadly Bosses",
+            "Less tough Normies",
+            "Less tough Elites",
+            "Less tough Bosses",
+            "More upgraded cards",
+            "Richer Bosses",
+            "Higher Max HP",
+            "Less expensive shops",
+            "Max HP after Bosses",
+            "More gold gain",
+            "Better Healing",
+            "Normies drop relics",
+            "More Elite cards",
+            "Relics(R) from Bosses",
+            "Additional potions",
+            "More energy",
+            "Extra card draw",
+            "Upgraded start and ",
+            "better chests"
+        ]
+    }
 }

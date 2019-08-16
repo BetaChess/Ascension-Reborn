@@ -21,7 +21,7 @@ public class PlayerInitPatch {
 	{
 		public static void Postfix(AbstractPlayer __instance) 
 		{
-			if (AscensionMod.AbsoluteAscensionLevel <= -20 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(19).toggledOn)) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -20 || AscensionMod.getCustomToggleState(-20)) {
 				for (AbstractCard c : __instance.masterDeck.group)
 					c.upgrade();
 			}

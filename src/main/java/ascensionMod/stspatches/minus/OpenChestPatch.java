@@ -11,7 +11,7 @@ public class OpenChestPatch {
 	@SpirePatch(clz = AbstractChest.class, method = "open")
 	public static class OpenChest {
 		public static void Prefix(AbstractChest __instance, boolean bossChest) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -20  || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(19).toggledOn)) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -20  || AscensionMod.getCustomToggleState(-20)) {
 				if (!bossChest)
 					AbstractDungeon.getCurrRoom().addRelicToRewards(AbstractDungeon.returnRandomRelicTier());
 			}

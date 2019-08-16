@@ -331,6 +331,11 @@ EditCardsSubscriber
     
     public static boolean getCustomToggleState(int level)
     {
+    	if (CharSelectScreenUI.ascScreen == null)
+    	{
+    		return false;
+    	}
+    	
     	if (level == 0)
     	{
     		logger.error("0 was passed to method: 'getCustomToggleState', returning false");

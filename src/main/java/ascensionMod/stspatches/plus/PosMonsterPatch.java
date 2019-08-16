@@ -31,77 +31,115 @@ import ascensionMod.AscensionMod;
 import javassist.CannotCompileException;
 import javassist.CtBehavior;
 
-
 public class PosMonsterPatch {
 	public static final Logger logger = LogManager.getLogger(PosMonsterPatch.class.getName());
-	
-	
-	@SpirePatch(
-		clz = Darkling.class, 
-		method = SpirePatch.CONSTRUCTOR,
-		paramtypez = {float.class, float.class}
-	)
-	
-	@SpirePatch(
-		clz = OrbWalker.class, 
-		method = SpirePatch.CONSTRUCTOR,
-		paramtypez = {float.class, float.class}
-	)
-	public static class NormalMonsterPatches_2
-	{
-		@SpireInsertPatch(
-			locator = Locator.class
-		)
-		public static void Insert(AbstractMonster __instance, final float x, final float y) 
-		{
-			logger.info("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP");
+
+	@SpirePatch(clz = Darkling.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = OrbWalker.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = SpikeSlime_M.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = SpikeSlime_L.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = Exploder.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = Repulsor.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = Spiker.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = BanditPointy.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = Chosen.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = ShelledParasite.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = SnakePlant.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = Snecko.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = AcidSlime_L.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = AcidSlime_M.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = OrbWalker.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = FungiBeast.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = GremlinFat.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = GremlinThief.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = GremlinTsundere.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = GremlinWarrior.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = GremlinWizard.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = LouseDefensive.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = LouseNormal.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = SlaverBlue.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	@SpirePatch(clz = SlaverRed.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class })
+	public static class NormalMonsterPatches_2 {
+		@SpireInsertPatch(locator = Locator.class)
+		public static void Insert(AbstractMonster __instance, final float x, final float y) {
+			// logger.info("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP");
+			if ((AbstractDungeon.ascensionLevel == 2 || AbstractDungeon.ascensionLevel == 0)
+					&& AscensionMod.getCustomToggleState(7)) {
+				AbstractDungeon.ascensionLevel = 7;
+			} else if ((AbstractDungeon.ascensionLevel == 7 || AbstractDungeon.ascensionLevel == 0)
+					&& AscensionMod.getCustomToggleState(2)) {
+				AbstractDungeon.ascensionLevel = 2;
+			}
 		}
-		
-		private static class Locator extends SpireInsertLocator 
-		{
-			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException 
-			{
-				//Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractMonster.class, "setHp");
+
+		public static void Prefix(AbstractMonster __instance, final float x, final float y) {
+			if (AscensionMod.getCustomToggleState(2)) {
+				AbstractDungeon.ascensionLevel = 2;
+			} else {
+				if (AscensionMod.customAscensionRun)
+				AbstractDungeon.ascensionLevel = 0;
+			}
+		}
+
+		public static void Postfix(AbstractMonster __instance, final float x, final float y) {
+			if (AscensionMod.customAscensionRun) {
+				AbstractDungeon.ascensionLevel = 0;
+			}
+		}
+
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				// Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractMonster.class,
+				// "setHp");
 				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "ascensionLevel");
-			    
-				
-				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				// Matcher finalMatcher = new Matcher.InstanceOfMatcher("if
+				// (AbstractDungeon.ascensionLevel >= 2) {");
+
+				return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	@SpirePatch(
-		clz = AbstractDungeon.class, 
-		method = "setCurrMapNode"
-	)
-	public static class MosterPatch 
-	{
-		
-		public static void Prefix()	
-		{
-			logger.info("Getting next room");
-			logger.info("Room is: " + AbstractDungeon.nextRoom.room.toString());
-			
-			
+
+	@SpirePatch(clz = Cultist.class, method = SpirePatch.CONSTRUCTOR, paramtypez = { float.class, float.class,
+			boolean.class })
+	public static class CultistPatch {
+		@SpireInsertPatch(locator = Locator.class)
+		public static void Insert(AbstractMonster __instance, final float x, final float y, final boolean talk) {
+			// logger.info("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEELP");
+			if ((AbstractDungeon.ascensionLevel == 2 || AbstractDungeon.ascensionLevel == 0)
+					&& AscensionMod.getCustomToggleState(7)) {
+				AbstractDungeon.ascensionLevel = 7;
+			} else if ((AbstractDungeon.ascensionLevel == 7 || AbstractDungeon.ascensionLevel == 0)
+					&& AscensionMod.getCustomToggleState(2)) {
+				AbstractDungeon.ascensionLevel = 2;
+			}
 		}
-	}
-	
-	@SpirePatch(
-		clz = AbstractMonster.class, 
-		method = SpirePatch.CONSTRUCTOR,
-		paramtypez = {String.class, String.class, int.class, float.class, float.class, float.class, float.class, String.class, float.class, float.class, boolean.class}
-	)
-	public static class test 
-	{
-		
-		public static void Prefix()
-		{
-			logger.info("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+
+		public static void Prefix(AbstractMonster __instance, final float x, final float y, final boolean talk) {
+			if (AscensionMod.getCustomToggleState(2)) {
+				AbstractDungeon.ascensionLevel = 2;
+			} else {
+				if (AscensionMod.customAscensionRun)
+				AbstractDungeon.ascensionLevel = 0;
+			}
+		}
+
+		public static void Postfix(AbstractMonster __instance, final float x, final float y, final boolean talk) {
+			if (AscensionMod.customAscensionRun) {
+				AbstractDungeon.ascensionLevel = 0;
+			}
+		}
+
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				// Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractMonster.class,
+				// "setHp");
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(AbstractDungeon.class, "ascensionLevel");
+				// Matcher finalMatcher = new Matcher.InstanceOfMatcher("if
+				// (AbstractDungeon.ascensionLevel >= 2) {");
+
+				return LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
 		}
 	}
 }

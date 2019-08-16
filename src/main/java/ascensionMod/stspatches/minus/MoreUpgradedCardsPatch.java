@@ -18,7 +18,7 @@ public class MoreUpgradedCardsPatch {
 	@SpirePatch(clz = Exordium.class, method = "initializeLevelSpecificChances")
 	public static class ExordiumPatch {
 		public static void Postfix(Exordium __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -7 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(6).toggledOn)) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -7 || AscensionMod.getCustomToggleState(-7)) {
 				try {
 					Field field = AbstractDungeon.class.getDeclaredField("cardUpgradedChance");
 					field.setAccessible(true);
@@ -33,7 +33,7 @@ public class MoreUpgradedCardsPatch {
 	@SpirePatch(clz = TheCity.class, method = "initializeLevelSpecificChances")
 	public static class TheCityPatch {
 		public static void Postfix(TheCity __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -7 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(6).toggledOn)) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -7 || AscensionMod.getCustomToggleState(-7)) {
 				try {
 					Field field = AbstractDungeon.class.getDeclaredField("cardUpgradedChance");
 					field.setAccessible(true);
@@ -48,7 +48,7 @@ public class MoreUpgradedCardsPatch {
 	@SpirePatch(clz = TheBeyond.class, method = "initializeLevelSpecificChances")
 	public static class TheBeyondPatch {
 		public static void Postfix(TheBeyond __instance) {
-			if (AscensionMod.AbsoluteAscensionLevel <= -7 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.negAscButtons.get(6).toggledOn)) {
+			if (AscensionMod.AbsoluteAscensionLevel <= -7 || AscensionMod.getCustomToggleState(-7)) {
 				try {
 					Field field = AbstractDungeon.class.getDeclaredField("cardUpgradedChance");
 					field.setAccessible(true);

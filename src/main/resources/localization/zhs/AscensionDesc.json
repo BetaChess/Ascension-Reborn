@@ -27,6 +27,37 @@
         "24.进阶之灾不再是虚无的了",
         "25.(最高进阶) 在boss遗物之前需要选择一种荒疫 "
     ]
-  }
+  },
+    
+    
+    "ShortAscensionModeDescriptions": {
+        "TEXT": [
+            "More elite spawns",
+            "Deadlier Normies",
+            "Deadlier Elites",
+            "Deadlier Bosses",
+            "Less post-battle heal",
+            "Damaged start",
+            "Tougher Normies",
+            "Tougher Elites",
+            "Tougher Bosses",
+            "Cursed beginnings",
+            "Fewer Potion Slots",
+            "Fewer upgraded cards",
+            "Poor Bosses",
+            "Lower Max HP",
+            "Unfavorable events",
+            "Expensive shops",
+            "Advanced Normies",
+            "Advanced Elites",
+            "Advanced Bosses",
+            "Double Boss",
+            "Costly card removal",
+            "Less gold gain",
+            "Bad healing",
+            "Stronger start curse",
+            "Blighted Boss relic"
+        ]
+    }
 }
  

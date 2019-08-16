@@ -22,5 +22,32 @@
         "매 턴 시작 시 카드를 1장 추가로 뽑습니다.",
         "(최저 단계) 모든 기본 카드가 강화되어 있습니다, 모든 보스 상자를 제외한 상자에 유물이 2개씩 들어 있습니다."
     ]
-  }
+  },
+    
+    
+    "ShortAscensionMinusDescriptions": {
+        "TEXT": [
+            "Less deadly Normies",
+            "Less deadly Elites",
+            "Less deadly Bosses",
+            "Less tough Normies",
+            "Less tough Elites",
+            "Less tough Bosses",
+            "More upgraded cards",
+            "Richer Bosses",
+            "Higher Max HP",
+            "Less expensive shops",
+            "Max HP after Bosses",
+            "More gold gain",
+            "Better Healing",
+            "Normies drop relics",
+            "More Elite cards",
+            "Relics(R) from Bosses",
+            "Additional potions",
+            "More energy",
+            "Extra card draw",
+            "Upgraded start and ",
+            "better chests"
+        ]
+    }
 }

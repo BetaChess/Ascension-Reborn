@@ -27,6 +27,37 @@
         "등반자의 골칫거리가 더 이상 사라지지 않습니다.",
         "(최고 단계) 보스 유물을 선택하기 전 역병을 선택합니다. "
     ]
-  }
+  },
+    
+    
+    "ShortAscensionModeDescriptions": {
+        "TEXT": [
+            "More elite spawns",
+            "Deadlier Normies",
+            "Deadlier Elites",
+            "Deadlier Bosses",
+            "Less post-battle heal",
+            "Damaged start",
+            "Tougher Normies",
+            "Tougher Elites",
+            "Tougher Bosses",
+            "Cursed beginnings",
+            "Fewer Potion Slots",
+            "Fewer upgraded cards",
+            "Poor Bosses",
+            "Lower Max HP",
+            "Unfavorable events",
+            "Expensive shops",
+            "Advanced Normies",
+            "Advanced Elites",
+            "Advanced Bosses",
+            "Double Boss",
+            "Costly card removal",
+            "Less gold gain",
+            "Bad healing",
+            "Stronger start curse",
+            "Blighted Boss relic"
+        ]
+    }
 }
  

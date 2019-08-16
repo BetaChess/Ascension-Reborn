@@ -347,7 +347,56 @@ public class AscensionPatches
 		    return SpireReturn.Return(null);
 		}
 		public static void Postfix(TopPanel __instance) {
-			if (AbstractDungeon.isAscensionMode) {
+			if (AscensionMod.customAscensionRun)
+			{
+				final StringBuilder sb = new StringBuilder();
+				for (int i = 0; i < Math.abs(AscensionMod.MINMODASCENSIONLEVEL); i++) {
+					if(AscensionMod.getCustomToggleState(-(i+1)))
+					{
+						if(!(sb.length() == 0))
+							sb.append(" NL ");
+						sb.append(AscensionMinusLevels[i]);
+						System.out.println(AscensionMinusLevels[i]);
+					}
+				}
+
+				for (int i = 0; i < AscensionMod.MAXMODASCENSIONLEVEL; i++) {
+					
+					if(AscensionMod.getCustomToggleState(i+1))
+					{
+						if(!(sb.length() == 0))
+							sb.append(" NL ");
+						sb.append(AscensionLevels[i]);
+						System.out.println(AscensionLevels[i]);
+					}
+
+
+				}
+				
+				Field ascensionStringF = null;
+				try {
+					ascensionStringF = TopPanel.class.getDeclaredField("ascensionString");
+				} catch (NoSuchFieldException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(sb.toString());
+				ascensionStringF.setAccessible(true);
+				//String x = sb.toString();
+				try {
+					ascensionStringF.set(__instance, sb.toString());
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else if (AbstractDungeon.isAscensionMode) {
 				final StringBuilder sb = new StringBuilder();
 				if(AscensionMod.AbsoluteAscensionLevel < 0)
 				{

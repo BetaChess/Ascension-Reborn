@@ -34,7 +34,7 @@ public class BossChestPatch {
 		@SuppressWarnings("rawtypes")
 		public static SpireReturn Prefix(BossChest __instance, final boolean bossChest)
 		{
-			if(!(AscensionMod.AbsoluteAscensionLevel < 25) || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(24).toggledOn) && AbstractDungeon.actNum < 7)
+			if((!(AscensionMod.AbsoluteAscensionLevel < 25) || AscensionMod.getCustomToggleState(25)) && AbstractDungeon.actNum < 7)
 			{
 				if(CursedFlame.count == 0)
 				{

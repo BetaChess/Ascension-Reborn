@@ -20,7 +20,7 @@ public class HealPatch
 	)
 	public static class HealthGainCreaturePatch{
 		public static void Prefix(AbstractCreature __instance, @ByRef int[] healAmt) {
-			if(AscensionMod.AbsoluteAscensionLevel >= 23 || (AscensionMod.customAscensionRun && CharSelectScreenUI.ascScreen.posAscButtons.get(22).toggledOn)) {
+			if(AscensionMod.AbsoluteAscensionLevel >= 23 || AscensionMod.getCustomToggleState(23)) {
 				healAmt[0] -= Math.round(healAmt[0]*lessHealPct);
 			}
 		}

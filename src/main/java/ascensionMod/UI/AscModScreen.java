@@ -67,6 +67,7 @@ public class AscModScreen {
     private static Texture containerMiddle = ImageMaster.loadImage("ui/middleBox.png");
     private static Texture containerBottom = ImageMaster.loadImage("ui/bottomBox.png");
     private static Texture highlightBox = ImageMaster.loadImage("ui/highlightBox.png");
+    private static Texture presetBox = ImageMaster.loadImage("ui/prebox.png");
     
     // UI Buttons
     private AscButton applyButton;
@@ -76,6 +77,8 @@ public class AscModScreen {
     
     public ArrayList<AscToggleButton> negAscButtons = new ArrayList<>(); 
     public ArrayList<AscToggleButton> posAscButtons = new ArrayList<>();
+    
+    public ArrayList<AscButton> presetButtons = new ArrayList<>();
 	
 	//private Hitbox customAscensionModeHb;
 	
@@ -163,6 +166,19 @@ public class AscModScreen {
 						)
 			);
 		}
+		
+		// Preset boxes
+		for (int i = 0; i < 4; i++)
+		{
+			presetButtons.add(
+					new AscButton(
+							Settings.WIDTH / 2.0f - presetBox.getWidth()/2.0f,
+							Settings.HEIGHT - 300.0f * Settings.scale + Settings.scale * scrollY,
+							presetBox,
+							"FFFFFFFFFFFF"
+						)
+			);
+		}
 
         //configHb = new Hitbox(100 * Settings.scale, 40 * Settings.scale);
 		prepareContradictors();
@@ -201,8 +217,16 @@ public class AscModScreen {
         	posAscButtons.get(i).update();
         }
         
-        arrowRight.update(); // Code needs to be written
-        arrowLeft.update(); // Code needs to be written
+        if(dropDownActive)	
+        {
+        	arrowRight.update(); // Code needs to be written
+        	arrowLeft.update(); // Code needs to be written
+        	
+        	for (int i = 0; i < presetButtons.size(); i++)
+        	{
+        		presetButtons.get(i).update();
+        	}
+        }
         
         copyToPlaceHolderButton.update(); // Code needs to be written
         applyButton.update(); // Code needs to be written
@@ -227,7 +251,6 @@ public class AscModScreen {
         presetHitbox.update();
         if (presetHitbox.hovered && dropDownActive)
         {
-        	AscensionMod.logger.info("REEEEEEEEEEEEEEEEEEEEEEE!");
         	for(int i = 0; i < 10; i++)
     		{
         		negAscButtons.get(i).hb.hovered = false;
@@ -438,6 +461,10 @@ public class AscModScreen {
         	arrowLeft.y = Settings.HEIGHT - 900.0f * Settings.scale + Settings.scale * scrollY;
         	arrowLeft.render(sb);
         	
+        	for (int i = 0; i < presetButtons.size(); i++)
+        	{
+        		presetButtons.get(i).render(sb);;
+        	}
         	
         }
         

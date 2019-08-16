@@ -88,5 +88,10 @@ public class AscButton {
         this.hb.render(sb);
     }
     
+    public void setText(String newText)
+    {
+    	this.text = newText;
+    }
+    
     
 }
