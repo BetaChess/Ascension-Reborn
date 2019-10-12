@@ -137,49 +137,10 @@ public class CharSelectScreenUI {
     {
         public static void Postfix(CharacterSelectScreen __instance, final SpriteBatch sb)
         {
-        	/*if (customAscensionModeHb.justHovered)
-        	{
-        		AscensionMod.logger.info(Settings.scale);
-        	}*/
-        	
-        	if (customAscensionModeHb.clicked)
-        	{
-        		customAscensionModeHb.clicked = false;
-        		
-        		if (AscensionMod.customAscensionRun)
-        			AscensionMod.customAscensionRun = false;
-        		
-        		else
-        		{
-        			if (__instance.isAscensionMode)
-        			{
-        				__instance.isAscensionMode = false;
-        				AbstractDungeon.isAscensionMode = false;
-        				logger.info(__instance.isAscensionMode);
-        			}
-        			
-        			AscensionMod.customAscensionRun = true;
-        		}
-        		
-        		
-        	}
-        	
-        	if (openAscMenuButton.pressed)
-        	{
-        		openAscMenuButton.pressed = false;
-        		
-        		CardCrawlGame.mainMenuScreen.darken();
-        		CardCrawlGame.mainMenuScreen.screen = AscModScreen.Enum.ASC_MOD;
-        		
-        		if (ascScreen == null) {
-                	ascScreen = new AscModScreen();
-                }
-        		ascScreen.open();
-        	}
-        	
-        	Field anySelectedF = null;
+
+        	Field isAscensionModeUnlockedF = null;
 			try {
-				anySelectedF = CharacterSelectScreen.class.getDeclaredField("anySelected");
+				isAscensionModeUnlockedF = CharacterSelectScreen.class.getDeclaredField("isAscensionModeUnlocked");
 			} catch (NoSuchFieldException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -187,10 +148,10 @@ public class CharSelectScreenUI {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			anySelectedF.setAccessible(true);
-			boolean anySelected = false;
+			isAscensionModeUnlockedF.setAccessible(true);
+			boolean isAscensionModeUnlocked = false;
 			try {
-				anySelected = (boolean)anySelectedF.get(__instance);
+				isAscensionModeUnlocked = (boolean)isAscensionModeUnlockedF.get(__instance);
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -199,11 +160,46 @@ public class CharSelectScreenUI {
 				e.printStackTrace();
 			}
 			
-			if(anySelected)
+			if(isAscensionModeUnlocked)
 			{
-	        	Field ASC_LEFT_WF = null;
+	        	if (customAscensionModeHb.clicked)
+	        	{
+	        		customAscensionModeHb.clicked = false;
+	        		
+	        		if (AscensionMod.customAscensionRun)
+	        			AscensionMod.customAscensionRun = false;
+	        		
+	        		else
+	        		{
+	        			if (__instance.isAscensionMode)
+	        			{
+	        				__instance.isAscensionMode = false;
+	        				AbstractDungeon.isAscensionMode = false;
+	        				logger.info(__instance.isAscensionMode);
+	        			}
+	        			
+	        			AscensionMod.customAscensionRun = true;
+	        		}
+	        		
+	        		
+	        	}
+	        	
+	        	if (openAscMenuButton.pressed)
+	        	{
+	        		openAscMenuButton.pressed = false;
+	        		
+	        		CardCrawlGame.mainMenuScreen.darken();
+	        		CardCrawlGame.mainMenuScreen.screen = AscModScreen.Enum.ASC_MOD;
+	        		
+	        		if (ascScreen == null) {
+	                	ascScreen = new AscModScreen();
+	                }
+	        		ascScreen.open();
+	        	}
+	        	
+	        	Field anySelectedF = null;
 				try {
-					ASC_LEFT_WF = CharacterSelectScreen.class.getDeclaredField("ASC_LEFT_W");
+					anySelectedF = CharacterSelectScreen.class.getDeclaredField("anySelected");
 				} catch (NoSuchFieldException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -211,10 +207,10 @@ public class CharSelectScreenUI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				ASC_LEFT_WF.setAccessible(true);
-				float ASC_LEFT_W = 0;
+				anySelectedF.setAccessible(true);
+				boolean anySelected = false;
 				try {
-					ASC_LEFT_W = (float)ASC_LEFT_WF.get(__instance);
+					anySelected = (boolean)anySelectedF.get(__instance);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -222,15 +218,40 @@ public class CharSelectScreenUI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        	
-				sb.setColor(Color.WHITE);
-	        	sb.draw(ImageMaster.OPTION_TOGGLE, Settings.WIDTH / 2.0f - ASC_LEFT_W - 16.0f - 30.0f * Settings.scale - 360.0f * Settings.scale, 70.0f * Settings.scale - 16.0f, 16.0f, 16.0f, 32.0f, 32.0f, Settings.scale, Settings.scale, 0.0f, 0, 0, 32, 32, false, false);
-	        	if (AscensionMod.customAscensionRun)
-	        		sb.draw(toggleOverlay, Settings.WIDTH / 2.0f - ASC_LEFT_W - 16.0f - 30.0f * Settings.scale - 360.0f * Settings.scale, 70.0f * Settings.scale - 16.0f, 16.0f, 16.0f, 32.0f, 32.0f, Settings.scale, Settings.scale, 0.0f, 0, 0, 32, 32, false, false);
-	        	FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, uiStrings.TEXT[0], Settings.WIDTH / 2.0f - ASC_LEFT_W / 2.0f - 305.0f * Settings.scale, 70.0f * Settings.scale, Settings.GOLD_COLOR);
-	        	//FontHelper.renderFontCentered(sb, FontHelper.cardDescFont_N, uiStrings.TEXT[0], Settings.WIDTH / 2.0f, 35.0f * Settings.scale, Settings.CREAM_COLOR);
-	        	openAscMenuButton.render(sb);
-	        	customAscensionModeHb.render(sb);
+				
+				if(anySelected)
+				{
+		        	Field ASC_LEFT_WF = null;
+					try {
+						ASC_LEFT_WF = CharacterSelectScreen.class.getDeclaredField("ASC_LEFT_W");
+					} catch (NoSuchFieldException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					ASC_LEFT_WF.setAccessible(true);
+					float ASC_LEFT_W = 0;
+					try {
+						ASC_LEFT_W = (float)ASC_LEFT_WF.get(__instance);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        	
+					sb.setColor(Color.WHITE);
+		        	sb.draw(ImageMaster.OPTION_TOGGLE, Settings.WIDTH / 2.0f - ASC_LEFT_W - 16.0f - 30.0f * Settings.scale - 360.0f * Settings.scale, 70.0f * Settings.scale - 16.0f, 16.0f, 16.0f, 32.0f, 32.0f, Settings.scale, Settings.scale, 0.0f, 0, 0, 32, 32, false, false);
+		        	if (AscensionMod.customAscensionRun)
+		        		sb.draw(toggleOverlay, Settings.WIDTH / 2.0f - ASC_LEFT_W - 16.0f - 30.0f * Settings.scale - 360.0f * Settings.scale, 70.0f * Settings.scale - 16.0f, 16.0f, 16.0f, 32.0f, 32.0f, Settings.scale, Settings.scale, 0.0f, 0, 0, 32, 32, false, false);
+		        	FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, uiStrings.TEXT[0], Settings.WIDTH / 2.0f - ASC_LEFT_W / 2.0f - 305.0f * Settings.scale, 70.0f * Settings.scale, Settings.GOLD_COLOR);
+		        	//FontHelper.renderFontCentered(sb, FontHelper.cardDescFont_N, uiStrings.TEXT[0], Settings.WIDTH / 2.0f, 35.0f * Settings.scale, Settings.CREAM_COLOR);
+		        	openAscMenuButton.render(sb);
+		        	customAscensionModeHb.render(sb);
+				}
 			}
         }
     }

@@ -239,7 +239,7 @@ public class AscModScreen {
 
             CardCrawlGame.mainMenuScreen.screen = MainMenuScreen.CurScreen.CHAR_SELECT;
             button.hide();
-            CardCrawlGame.mainMenuScreen.lighten();
+//            CardCrawlGame.mainMenuScreen.lighten();
         }
         
         dropDownHitbox.update();

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +14,13 @@ import org.apache.logging.log4j.Logger;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.lib.ByRef;
+import com.evacipated.cardcrawl.modthespire.lib.LineFinder;
+import com.evacipated.cardcrawl.modthespire.lib.Matcher;
+import com.evacipated.cardcrawl.modthespire.lib.SpireInsertLocator;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInsertPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.evacipated.cardcrawl.modthespire.patcher.PatchingException;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.characters.*;
@@ -31,7 +36,8 @@ import com.megacrit.cardcrawl.ui.panels.TopPanel;
 
 import basemod.BaseMod;
 import basemod.ReflectionHacks;
-
+import javassist.CannotCompileException;
+import javassist.CtBehavior;
 import ascensionMod.AscensionMod;
 
 
@@ -52,6 +58,8 @@ public class AscensionPatches
 	
 	private static String[] AscensionLevels = AscensionLevelStrings.TEXT;
 	private static String[] AscensionMinusLevels = AscensionMinusLevelStrings.TEXT;
+	
+	private static int customModeCounter = 0;
 	
 	
 	/*private static String loadJson(String jsonPath) {
@@ -258,13 +266,10 @@ public class AscensionPatches
 	)
 	public static class RenderPatch{
 
-		@SpireInsertPatch(
-			rloc=61
-		)
+		@SpireInsertPatch(locator = Locator.class)
 		public static void Insert(CustomModeScreen __instance, SpriteBatch sb)
 		{
 			AscensionMod.AbsoluteAscensionLevel = __instance.ascensionLevel;
-			__instance.ascensionLevel = 0;
 		}
 		
 		public static void Postfix(CustomModeScreen __instance, SpriteBatch sb) {
@@ -327,6 +332,41 @@ public class AscensionPatches
 				else
 					FontHelper.renderSmartText(sb, FontHelper.charDescFont, CardCrawlGame.mainMenuScreen.charSelectScreen.ascLevelInfoString = AscensionMinusLevels[(Math.abs(__instance.ascensionLevel) - 1)], screenX + 475.0F * com.megacrit.cardcrawl.core.Settings.scale, ascensionModeHb.cY + 10.0F * com.megacrit.cardcrawl.core.Settings.scale, 9999.0F, 32.0F * com.megacrit.cardcrawl.core.Settings.scale, com.megacrit.cardcrawl.core.Settings.CREAM_COLOR);
 					
+			}
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.MethodCallMatcher(FontHelper.class, "renderFontCentered");
+
+				return LineFinder.findInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+			}
+		}
+	}
+	
+	
+	@SpirePatch(
+		cls = "com.megacrit.cardcrawl.screens.custom.CustomModeScreen",
+		method = "renderAscension"
+	)
+	public static class RenderNegativePatch{
+		@SpireInsertPatch(locator = Locator.class)
+		public static void Insert(CustomModeScreen __instance, SpriteBatch sb)
+		{
+//			FontHelper.renderSmartText(sb, FontHelper.charDescFont, CardCrawlGame.mainMenuScreen.charSelectScreen.ascLevelInfoString = CharacterSelectScreen.A_TEXT[this.ascensionLevel - 1], this.screenX + 475.0f * Settings.scale, this.ascensionModeHb.cY + 10.0f * Settings.scale, 9999.0f, 32.0f * Settings.scale, Settings.CREAM_COLOR);
+			if(AscensionMod.AbsoluteAscensionLevel < 0)
+			{
+				__instance.ascensionLevel = 0;
+			}
+		}
+		
+		private static class Locator extends SpireInsertLocator {
+			public int[] Locate(CtBehavior ctMethodToPatch) throws CannotCompileException, PatchingException {
+				Matcher finalMatcher = new Matcher.FieldAccessMatcher(CustomModeScreen.class, "ascensionLevel");
+				int[] temp = LineFinder.findAllInOrder(ctMethodToPatch, new ArrayList<Matcher>(), finalMatcher);
+				int[] retArray = new int[] {temp[2] - 1};
+
+				return retArray;
 			}
 		}
 	}
