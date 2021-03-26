@@ -21,14 +21,23 @@ import com.megacrit.cardcrawl.screens.mainMenu.MainMenuScreen;
 import com.megacrit.cardcrawl.screens.mainMenu.MenuCancelButton;
 import com.megacrit.cardcrawl.screens.mainMenu.PatchNotesScreen;
 import com.megacrit.cardcrawl.ui.buttons.Button;
+import com.megacrit.cardcrawl.ui.panels.RenamePopup;
 
 import ascensionMod.AscensionMod;
 import ascensionMod.UI.buttons.AscButton;
 import ascensionMod.UI.buttons.AscToggleButton;
 import ascensionMod.UI.buttons.CancelButton;
+import ascensionMod.UI.panels.RenameBox;
+import ascensionMod.util.Preset;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,8 +56,17 @@ public class AscModScreen {
     private float scrollLowerBound;
     private float scrollUpperBound;
     
+    // Localization
+    private static UIStrings UiStrings = CardCrawlGame.languagePack.getUIString("AscModScreenUiStrings"); 
+    
+	private static String[] TEXT = UiStrings.TEXT;
+    
     // UI Variables
-    private static boolean dropDownActive = false;
+	private static ArrayList<Preset> presets = new ArrayList<Preset>();
+    private boolean dropDownActive = false;
+    private static final int prePerPage = 5;
+    private int currPage = 0;
+    private int currPreset = -1;
     
     // UI Hitboxes
     private Hitbox dropDownHitbox;
@@ -70,8 +88,10 @@ public class AscModScreen {
     private static Texture presetBox = ImageMaster.loadImage("ui/prebox.png");
     
     // UI Buttons
-    private AscButton applyButton;
-    private AscButton copyToPlaceHolderButton;
+    private AscButton deleteButton;
+    private AscButton saveButton;
+    private AscButton loadFromClipBoardButton;
+    private AscButton copyToClipBoardButton;
     private AscButton arrowRight;
     private AscButton arrowLeft;
     
@@ -79,6 +99,9 @@ public class AscModScreen {
     public ArrayList<AscToggleButton> posAscButtons = new ArrayList<>();
     
     public ArrayList<AscButton> presetButtons = new ArrayList<>();
+    
+    // UI Panels
+    private RenameBox renamePopup;
 	
 	//private Hitbox customAscensionModeHb;
 	
@@ -89,29 +112,46 @@ public class AscModScreen {
 	
 	
 	AscModScreen() {
+		for (String s : AscensionMod.config.getString("Presets").split("_"))
+			presets.add(new Preset(s));
 		
 		this.grabbedScreen = false;
         this.grabStartY = 0.0f;
         this.scrollY = 0.0f;
         this.calculateScrollBounds();
+        this.renamePopup = new RenameBox();
 		
         
 		//(customAscensionModeHb = new Hitbox(100.0f * Settings.scale, 50.0f * Settings.scale)).move(Settings.WIDTH / 2.0f - 50.0f * Settings.scale, 70.0f * Settings.scale);
 		(dropDownHitbox = new Hitbox(500.0f * Settings.scale, 60.0f * Settings.scale)).move(Settings.WIDTH / 2.0f, Settings.HEIGHT - 175.0f * Settings.scale);
 		(presetHitbox = new Hitbox(Settings.scale * 570, Settings.scale * 802)).move(Settings.WIDTH / 2.0f - Settings.scale * 612 / 2, Settings.HEIGHT - 980.0f * Settings.scale + Settings.scale * scrollY);
 		
-		applyButton = new AscButton(
-				Settings.WIDTH / 2.0f - Settings.scale * 201 / 2 - Settings.scale * 410.0f, 
+		deleteButton = new AscButton(
+				Settings.WIDTH / 2.0f - Settings.scale * buttonTexture.getWidth() / 2 - Settings.scale * 640.0f, 
 				Settings.HEIGHT - 253.0f * Settings.scale,
 				buttonTexture,
-				"Set"
+				TEXT[5]
 				);
 		
-		copyToPlaceHolderButton = new AscButton(
-				Settings.WIDTH / 2.0f - Settings.scale * 201 / 2 + Settings.scale * 410.0f, 
+		saveButton = new AscButton(
+				Settings.WIDTH / 2.0f - Settings.scale * buttonTexture.getWidth() / 2 - Settings.scale * 410.0f, 
 				Settings.HEIGHT - 253.0f * Settings.scale,
 				buttonTexture,
-				"Copy"
+				TEXT[0]
+				);
+		
+		copyToClipBoardButton = new AscButton(
+				Settings.WIDTH / 2.0f - Settings.scale * buttonTexture.getWidth() / 2 + Settings.scale * 410.0f, 
+				Settings.HEIGHT - 253.0f * Settings.scale,
+				buttonTexture,
+				TEXT[1]
+				);
+		
+		loadFromClipBoardButton = new AscButton(
+				Settings.WIDTH / 2.0f - Settings.scale * buttonTexture.getWidth() / 2 + Settings.scale * 640.0f, 
+				Settings.HEIGHT - 253.0f * Settings.scale,
+				buttonTexture,
+				TEXT[4]
 				);
 		
 		arrowRight = new AscButton(
@@ -168,17 +208,19 @@ public class AscModScreen {
 		}
 		
 		// Preset boxes
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			presetButtons.add(
 					new AscButton(
 							Settings.WIDTH / 2.0f - presetBox.getWidth()/2.0f,
-							Settings.HEIGHT - 300.0f * Settings.scale + Settings.scale * scrollY,
+							Settings.HEIGHT - 365.0f * Settings.scale + Settings.scale * scrollY - (presetBox.getHeight() + 10 * Settings.scale) * i,
 							presetBox,
-							"FFFFFFFFFFFF"
+							""
 						)
 			);
 		}
+		
+		updatePresetButtons();
 
         //configHb = new Hitbox(100 * Settings.scale, 40 * Settings.scale);
 		prepareContradictors();
@@ -198,13 +240,20 @@ public class AscModScreen {
 		targetY = 0.0f;
 		
 		button.show(uiStrings.TEXT[0]);
-        
+		
         CardCrawlGame.mainMenuScreen.darken();
         CardCrawlGame.mainMenuScreen.screen = Enum.ASC_MOD;
     }
 	
 	public void update()
     {
+		// Update rename box
+		if (renamePopup.shown)
+		{
+			renamePopup.update();
+			return;
+		}
+		
         // Update negative buttons
         for (int i = 0; i < Math.abs(AscensionMod.MINMODASCENSIONLEVEL); i++)
         {
@@ -217,19 +266,106 @@ public class AscModScreen {
         	posAscButtons.get(i).update();
         }
         
-        if(dropDownActive)	
+        // Delete needs to be checked first, as it can break everything.
+        deleteButton.update();
+        if (deleteButton.pressed)
         {
-        	arrowRight.update(); // Code needs to be written
-        	arrowLeft.update(); // Code needs to be written
-        	
-        	for (int i = 0; i < presetButtons.size(); i++)
+        	if (currPreset != -1)
         	{
-        		presetButtons.get(i).update();
+	        	deleteButton.pressed = false;
+	        	
+	        	presets.remove(currPreset);
+	        	currPreset = -1;
+	        	updatePresetButtons();
+	        	savePresetsToConfig();
         	}
         }
         
-        copyToPlaceHolderButton.update(); // Code needs to be written
-        applyButton.update(); // Code needs to be written
+        if(dropDownActive)	
+        {
+        	arrowRight.update();
+        	arrowLeft.update();
+        	
+        	if (arrowRight.pressed)
+        	{
+        		arrowRight.pressed = false;
+        		
+        		currPage++;
+        		if (currPage > ((int)presets.size() / prePerPage))
+        			currPage--;
+        		
+        		updatePresetButtons();
+        	}
+        	else if (arrowLeft.pressed)
+        	{
+        		arrowLeft.pressed = false;
+        		
+        		currPage--;
+        		if (currPage < 0)
+        			currPage = 0;
+        		
+        		updatePresetButtons();
+        	}
+        	for (int i = 0; i < presetButtons.size() && i < presets.size() - currPage * prePerPage; i++)
+        	{
+        		presetButtons.get(i).update();
+        		if (presetButtons.get(i).pressed)
+        		{
+        			presetButtons.get(i).pressed = false;
+        			
+        			loadAscensionFromString(presets.get(i + currPage * prePerPage).presetString);
+        			currPreset = i + currPage * prePerPage;
+        		}
+        	}
+        }
+        
+        copyToClipBoardButton.update();
+        if (copyToClipBoardButton.pressed)
+        {
+        	copyToClipBoardButton.pressed = false;
+        	
+        	if (currPreset != -1)
+        	{
+        		StringSelection stringSelection = new StringSelection(presets.get(currPreset).presetString);
+        		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        		clipboard.setContents(stringSelection, null);
+        	}
+        }
+        
+        loadFromClipBoardButton.update();
+        if (loadFromClipBoardButton.pressed)
+        {
+        	loadFromClipBoardButton.pressed = false;
+        	
+    		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+    		String ascstring = "";
+			try {
+				ascstring = (String) clipboard.getData(DataFlavor.stringFlavor);
+			} catch (UnsupportedFlavorException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+        	if (validateAscensionString(ascstring))
+        	{
+        		presets.add(new Preset(ascstring));
+        		updatePresetButtons();
+        	}
+        	
+        	savePresetsToConfig();
+        }
+        
+        saveButton.update();
+        if (saveButton.pressed)
+        {
+        	saveButton.pressed = false;
+        	
+        	renamePopup.open();
+        	savePresetsToConfig();
+        }
         
         button.update();
         if (button.hb.clicked || InputHelper.pressedEscape) 
@@ -259,7 +395,7 @@ public class AscModScreen {
     	
         }
         
-     // Update negative toggles
+        // Update negative toggles
         for (int i = 0; i < Math.abs(AscensionMod.MINMODASCENSIONLEVEL); i++)
         {
         	negAscButtons.get(i).updateToggle();
@@ -463,7 +599,13 @@ public class AscModScreen {
         	
         	for (int i = 0; i < presetButtons.size(); i++)
         	{
-        		presetButtons.get(i).render(sb);;
+				presetButtons.get(i).move(
+					Settings.WIDTH / 2.0f - presetBox.getWidth()/2.0f,
+					Settings.HEIGHT - 365.0f * Settings.scale + Settings.scale * scrollY - (presetBox.getHeight() + 10 * Settings.scale) * i
+				);
+				
+				if (!presetButtons.get(i).text.equals(""))
+					presetButtons.get(i).render(sb);;
         	}
         	
         }
@@ -498,21 +640,36 @@ public class AscModScreen {
         		);
         
         // Text on the banner:
-        FontHelper.renderFontCentered(sb, FontHelper.SCP_cardTitleFont_small, "None Selected",
-                Settings.WIDTH / 2.0f, // x
-                Settings.HEIGHT - 205.0f * Settings.scale + Settings.scale * scrollY, // y
-                Settings.GOLD_COLOR);
+        if (currPreset == -1)
+        {
+	        FontHelper.renderFontCentered(sb, FontHelper.SCP_cardTitleFont_small, TEXT[3],
+	                Settings.WIDTH / 2.0f, // x
+	                Settings.HEIGHT - 205.0f * Settings.scale + Settings.scale * scrollY, // y
+	                Settings.GOLD_COLOR);
+        }
+        else
+        {
+        	FontHelper.renderFontCentered(sb, FontHelper.SCP_cardTitleFont_small, presets.get(currPreset).name,
+	                Settings.WIDTH / 2.0f, // x
+	                Settings.HEIGHT - 205.0f * Settings.scale + Settings.scale * scrollY, // y
+	                Settings.GOLD_COLOR);
+        }
         
         // Update hitbox position
         dropDownHitbox.move(Settings.WIDTH / 2.0f, Settings.HEIGHT - 205.0f * Settings.scale + Settings.scale * scrollY);
         
-        // Button
-        applyButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
-        applyButton.render(sb);
+        // Buttons
+        saveButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
+        saveButton.render(sb);
         
-        copyToPlaceHolderButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
-        copyToPlaceHolderButton.render(sb);
+        deleteButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
+        deleteButton.render(sb);
         
+        copyToClipBoardButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
+        copyToClipBoardButton.render(sb);
+        
+        loadFromClipBoardButton.y = Settings.HEIGHT - 283.0f * Settings.scale + Settings.scale * scrollY;
+        loadFromClipBoardButton.render(sb);
         
         // Foreground
         sb.draw(foreground, 
@@ -527,7 +684,7 @@ public class AscModScreen {
         		);
         
         // Text at the top of the screen
-        FontHelper.renderFontCentered(sb, FontHelper.SCP_cardTitleFont_small, "Custom Ascension Screen",
+        FontHelper.renderFontCentered(sb, FontHelper.SCP_cardTitleFont_small, TEXT[2],
             Settings.WIDTH / 2.0f,
             Settings.HEIGHT - 70.0f * Settings.scale,
             Settings.GOLD_COLOR);
@@ -619,6 +776,8 @@ public class AscModScreen {
 
         button.render(sb);
         
+        if (renamePopup.shown)
+        	renamePopup.render(sb);
         
     }
     
@@ -651,6 +810,17 @@ public class AscModScreen {
         else if (this.targetY > this.scrollUpperBound) {
             this.targetY = MathHelper.scrollSnapLerpSpeed(this.targetY, this.scrollUpperBound);
         }
+    }
+    
+    private void updatePresetButtons()
+    {
+    	for (AscButton btn : presetButtons)
+    		btn.text = "";
+    	
+    	for (int i = 0; i < prePerPage && i < presets.size() - currPage * prePerPage; i++)
+    	{
+    		presetButtons.get(i).text = presets.get(i).name;
+    	}
     }
     
     private void calculateScrollBounds() {
@@ -687,6 +857,150 @@ public class AscModScreen {
     	posAscButtons.get(15).contradictor = negAscButtons.get(9);
     	posAscButtons.get(21).contradictor = negAscButtons.get(11);
     	posAscButtons.get(22).contradictor = negAscButtons.get(12);
+    }
+    
+    public void loadAscensionFromString(String ascString)
+    {
+    	String[] params = ascString.split("/");
+    	
+    	for (String s : params)
+    		AscensionMod.logger.info(s);
+    	
+    	for (AscToggleButton b : posAscButtons)
+    		b.toggledOn = false;
+    	for (AscToggleButton b : negAscButtons)
+    		b.toggledOn = false;
+    	
+    	for (int i = 1; i < params.length; i++)
+    	{
+    		if (params[i].charAt(0) == '*')
+    		{
+    			
+    		}
+    		else
+    		{
+    			int index = Integer.parseInt(params[i]);
+    			
+    			if (index < 0)
+    			{
+    				index = Math.abs(index);
+    				
+    				if (negAscButtons.get(index - 1).contradictor != null)
+        			{
+        		        if (negAscButtons.get(index - 1).contradictor.toggledOn && !negAscButtons.get(index - 1).toggledOn)
+        		        {
+        		        	negAscButtons.get(index - 1).contradictor.toggledOn = false;
+        		        }
+        			}
+    				negAscButtons.get(index - 1).toggledOn = true;
+    			}
+    			else
+    			{
+    				if (posAscButtons.get(index - 1).contradictor != null)
+        			{
+        		        if (posAscButtons.get(index - 1).contradictor.toggledOn && !posAscButtons.get(index - 1).toggledOn)
+        		        {
+        		        	posAscButtons.get(index - 1).contradictor.toggledOn = false;
+        		        }
+        			}
+    				posAscButtons.get(index - 1).toggledOn = true;
+    			}
+    		}
+    	}
+    	
+    }
+
+	
+    public boolean validateAscensionString(String ascString)
+    {
+    	String[] validationList = ascString.split("/");
+    	
+    	for (int i = 1; i < validationList.length; i++)
+    	{
+    		try
+    		{
+    			Integer.parseInt(validationList[i]);
+    		}
+    		catch (NumberFormatException e) 
+    		{
+				return false;
+			}
+    	}
+    	
+    	return true;
+    }
+    
+    public void nameConfiguration(String textField) {
+    	boolean anyOn = false;
+		for (AscToggleButton btn : posAscButtons)
+		{
+			if (btn.toggledOn)
+			{
+				anyOn = true;
+				break;
+			}
+		}
+		for (AscToggleButton btn : negAscButtons)
+		{
+			if (btn.toggledOn)
+			{
+				anyOn = true;
+				break;
+			}
+		}
+		
+		if (anyOn)
+		{
+			String presetText = textField.trim();
+			
+			for (int i = 0; i < posAscButtons.size(); i++)
+			{
+				if (posAscButtons.get(i).toggledOn)
+				{
+					presetText = presetText.concat("/" + (i + 1));
+				}
+			}
+			for (int i = 0; i < negAscButtons.size(); i++)
+			{
+				if (negAscButtons.get(i).toggledOn)
+				{
+					presetText = presetText.concat("/-" + (i + 1));
+				}
+			}
+
+			AscensionMod.logger.info("Creating preset: " + presetText);
+			
+			for (int i = 0; i < presets.size(); i++)
+			{
+				if (presets.get(i).name.equals(textField.trim()))
+				{
+					presets.get(i).presetString = presetText;
+					currPreset = i;
+					updatePresetButtons();
+					return;
+				}
+			}
+			
+			presets.add(new Preset(presetText));
+			currPreset = presets.size() - 1;
+		}
+		
+		updatePresetButtons();
+	}
+    
+    public void savePresetsToConfig()
+    {
+    	String strToSave = "";
+    	
+    	for (Preset p : presets)
+    		strToSave = strToSave + p.presetString;
+    	
+    	AscensionMod.config.setString("Presets", strToSave);
+		try {
+			AscensionMod.config.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
 }

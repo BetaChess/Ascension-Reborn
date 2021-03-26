@@ -25,7 +25,7 @@ public class AscButton {
     public boolean pressed;
     public float height;
     public float width;
-    protected String text;
+    public String text;
     protected float textSize;
 	
 	public AscButton(float x, float y, final Texture img) {
@@ -88,9 +88,13 @@ public class AscButton {
         this.hb.render(sb);
     }
     
-    public void setText(String newText)
+    public void move(float f, float g)
     {
-    	this.text = newText;
+    	this.x = f;
+        this.y = g;
+
+        this.hb.x = f;
+        this.hb.y = g;
     }
     
     

@@ -99,6 +99,7 @@ EditCardsSubscriber
     	defaults.setProperty("MaxAscLvl_IRONCLAD", "" + Ipref.getInteger("ASCENSION_LEVEL", 1));
     	defaults.setProperty("MaxAscLvl_DEFECT", "" + Dpref.getInteger("ASCENSION_LEVEL", 1));
     	defaults.setProperty("MaxAscLvl", "21");
+    	defaults.setProperty("Presets", "Def/1/2");
     	try {
 			config = new SpireConfig("ascensionMod", "config", defaults);
 		} catch (IOException e) {
@@ -187,6 +188,8 @@ EditCardsSubscriber
     	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "AscensionUiStrings.json"));
     	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "AscensionDesc.json"));
     	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "AscensionMinusDesc.json"));
+    	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "RenameBoxStrings.json"));
+    	BaseMod.loadCustomStrings(UIStrings.class, loadJson(getLocalizationPath() + "AscModScreenStrings.json"));
     	
     	logger.info("Done editing strings");
     }
