@@ -5,7 +5,7 @@
   "description": "Adds additional levels of ascension, both negative and positive",
   "credits": "ModTheSpire Community \nTranslations:\nDalamzi (Korean)\nIrisRaphael爱丽丝拉斐尔 (Simplified Chinese)",
   "version": "2.9.0",
-  "sts_version": "01-27-2020",
-  "mts_version": "3.8.3",
+  "sts_version": "12-14-2020", // ew, month-day-year format
+  "mts_version": "3.23.0",
   "dependencies": ["basemod"]
 } 
